@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Certificate details extracted successfully",
+  "data": {
+    "certificateNumber": "CERT-2026-1001",
+    "holderName": "Aarav Mehta",
+    "certificateName": "Full Stack Web Development",
+    "issuer": "Northstar Technical Academy",
+    "issueDate": "2026-01-15",
+    "expiryDate": "2027-12-31",
+    "status": "valid"
+  }
+}

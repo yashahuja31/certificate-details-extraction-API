@@ -1,0 +1,67 @@
+openapi: 3.1.0
+info:
+  title: Certificate Details Extraction API
+  version: 1.0.0
+  description: Rule-based text extraction using PDFBox and Tesseract OCR. No AI service is used.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/certificates/extract:
+    post:
+      summary: Extract certificate information from Base64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [certificate, fileType]
+              properties:
+                certificate:
+                  type: string
+                  description: Base64-encoded file bytes; a data URI prefix is also accepted.
+                fileType:
+                  type: string
+                  enum: [pdf, png, jpg, jpeg]
+      responses:
+        '200':
+          description: Extraction completed; missing fields are null and status may be unknown.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean, const: true }
+                  message: { type: string }
+                  data:
+                    type: object
+                    properties:
+                      certificateNumber: { type: [string, 'null'] }
+                      holderName: { type: [string, 'null'] }
+                      certificateName: { type: [string, 'null'] }
+                      issuer: { type: [string, 'null'] }
+                      issueDate: { type: [string, 'null'], format: date }
+                      expiryDate: { type: [string, 'null'], format: date }
+                      status: { type: string, enum: [valid, expired, unknown] }
+        '400':
+          description: Invalid request, invalid Base64, unsupported file type, or file signature mismatch.
+        '413':
+          description: Decoded file exceeds 10 MB.
+        '422':
+          description: Certificate is unreadable, corrupted, encrypted, or OCR failed.
+        '500':
+          description: Unexpected processing error.
+
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: API is running
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean, const: true }
+                  status: { type: string, const: ok }

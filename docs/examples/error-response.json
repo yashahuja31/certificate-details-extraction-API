@@ -1,0 +1,5 @@
+{
+  "success": false,
+  "message": "certificate is not valid Base64",
+  "error": { "code": "INVALID_BASE64" }
+}

@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Certificate details extracted successfully",
+  "data": {
+    "certificateNumber": "PART-2025-009",
+    "holderName": "Kabir Singh",
+    "certificateName": "Open Source Contributor Workshop",
+    "issuer": "Example Community Foundation",
+    "issueDate": "2025-08-12",
+    "expiryDate": null,
+    "status": "unknown"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Certificate details extracted successfully",
+  "data": {
+    "certificateNumber": "CERT-2022-0042",
+    "holderName": "Neha Kapoor",
+    "certificateName": "Cloud Fundamentals Certification",
+    "issuer": "Example Learning Institute",
+    "issueDate": "2022-04-03",
+    "expiryDate": "2024-04-03",
+    "status": "expired"
+  }
+}
