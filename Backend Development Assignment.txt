@@ -1,0 +1,171 @@
+Backend Development Assignment
+Certificate Details Extraction API
+
+Project Type: Backend Development
+Level: Fresher
+Objective: Develop a REST API to extract certificate information from a certificate string and return the extracted details in JSON format.
+
+1. Project Overview
+
+You are required to develop a backend API that accepts a certificate in Base64 string format, processes the certificate, extracts its available information, and returns the extracted details in a structured JSON response.
+
+The primary objective is to identify the certificate's expiry date and determine whether the certificate is currently valid or expired.
+
+The API should support certificates containing readable text and should handle cases where certain information is unavailable.
+
+2. Functional Requirements
+
+Requirement 1: Create Certificate Extraction API
+
+Create the following API endpoint:
+
+POST /api/certificates/extract
+
+The API must accept a JSON request containing the certificate file encoded as a Base64 string.
+
+Requirement 2: Request Format
+
+The client will send a request in the following format:
+
+{
+  "certificate": "BASE64_ENCODED_CERTIFICATE_STRING",
+  "fileType": "pdf"
+}
+
+
+Supported file types:
+
+PDF
+PNG
+JPG/JPEG
+
+The certificate will be provided as a Base64-encoded string, not as a direct file upload.
+
+Requirement 3: Extract Certificate Information
+
+The API should extract the following information wherever available:
+
+Certificate number or ID
+Certificate holder's name
+Certificate name or type
+Issuing organization
+Issue date
+Expiry date
+Certificate status
+
+If the expiry date is not explicitly mentioned in the certificate, the API must not invent or assume an expiry date.
+
+Requirement 4: Determine Certificate Status
+
+The API must determine the certificate status using the extracted expiry date and the current date.
+
+valid: The expiry date is in the future.
+expired: The expiry date is in the past.
+unknown: The expiry date is missing, unreadable, or cannot be reliably determined.
+
+If the certificate does not have an expiry date, return unknown unless the certificate's rules explicitly establish that it does not expire. Do not assume that a missing expiry date means the certificate is permanently valid.
+
+3. Expected Success Response
+
+For a certificate with an expiry date of December 31, 2027, the API should return a response similar to the following:
+
+{
+  "success": true,
+  "message": "Certificate details extracted successfully",
+  "data": {
+    "certificateNumber": "CERT-2025-1024",
+    "holderName": "Rahul Sharma",
+    "certificateName": "Professional Training Certificate",
+    "issuer": "ABC Institute",
+    "issueDate": "2025-01-01",
+    "expiryDate": "2027-12-31",
+    "status": "valid"
+  }
+}
+
+
+The above values are examples only. The actual response must contain information extracted from the provided certificate.
+
+4. Error Handling
+
+The API must handle the following scenarios:
+
+Missing certificate string
+Invalid Base64 string
+Unsupported file type
+Corrupted or unreadable certificate
+Certificate with missing information
+Certificate with no identifiable expiry date
+Unexpected processing errors
+
+Example error response:
+
+{
+  "success": false,
+  "message": "Unable to extract certificate details",
+  "error": {
+    "code": "CERTIFICATE_PROCESSING_FAILED"
+  }
+}
+
+
+Use appropriate HTTP status codes and meaningful error messages.
+
+5. Technical Requirements
+Develop the API using the backend framework assigned by the team.
+Decode the Base64 string into the appropriate file format.
+Extract text from PDF documents using a suitable PDF parsing library.
+Use OCR when processing scanned PDFs or image-based certificates.
+Parse the extracted text to identify the required certificate fields.
+Calculate certificate status using the current date and the extracted expiry date.
+Validate all incoming requests.
+Keep the code modular, readable, and maintainable.
+Do not hardcode certificate details or return fixed responses.
+Do not expose the complete certificate contents or Base64 string in application logs.
+
+If an AI or external OCR service is used, document the service and its role in the extraction process.
+
+6. Testing Requirements
+
+Test the API with at least the following cases:
+
+A valid certificate with an expiry date in the future.
+An expired certificate.
+A certificate without an expiry date.
+A certificate containing an issue date but no expiry date.
+An invalid Base64 string.
+A corrupted or unreadable certificate.
+An unsupported file type.
+A certificate where some fields are missing.
+
+Provide sample requests and responses for the test cases.
+
+7. Deliverables
+
+Submit the following:
+
+Complete backend source code.
+README containing setup and execution instructions.
+API documentation with request and response examples.
+Sample certificates for testing, using non-sensitive or synthetic data.
+Unit tests for the core functionality.
+A short explanation of how certificate information and expiry dates are extracted.
+8. Evaluation Criteria
+
+The assignment will be evaluated based on:
+
+API design and implementation.
+Correct Base64 decoding and file handling.
+Certificate information extraction accuracy.
+Expiry date and status calculation.
+Validation and error handling.
+Code structure and maintainability.
+Test coverage and documentation.
+Understanding of implementation choices and limitations.
+9. Submission Timeline
+
+Deadline: 2 working days from the assignment date.
+
+The candidate should be able to demonstrate the API locally and explain the complete request-to-response flow.
+
+Important: The API must extract actual information from the supplied certificate. Returning predefined or hardcoded certificate details will not be accepted.
