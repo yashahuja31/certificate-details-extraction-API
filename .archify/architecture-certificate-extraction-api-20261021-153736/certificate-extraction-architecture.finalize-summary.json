@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\architecture-certificate-extraction-api-20261021-153736\\candidate.json",
+    "sha256": "16c0b5fc73d786eef9423f5c8fe6319c85da2b37c7427802f8b25b3a16912525",
+    "bytes": 8521
+  },
+  "artifact": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\architecture-certificate-extraction-api-20261021-153736\\certificate-extraction-architecture.html",
+    "sha256": "9a0f40c19471fda8f3a569ae0349ecfea9ecc3a1f31ea319e00ef144de6db963",
+    "bytes": 835872
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\architecture-certificate-extraction-api-20261021-153736\\certificate-extraction-architecture.finalize.json",
+    "summaryReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\architecture-certificate-extraction-api-20261021-153736\\certificate-extraction-architecture.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\architecture-certificate-extraction-api-20261021-153736\\certificate-extraction-architecture.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-21T10:10:37.229Z",
+    "source": "network",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3952,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

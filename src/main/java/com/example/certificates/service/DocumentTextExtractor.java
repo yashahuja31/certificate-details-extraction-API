@@ -67,6 +67,9 @@ public class DocumentTextExtractor {
     private String runOcr(BufferedImage image) {
         try {
             ITesseract tesseract = new Tesseract();
+            tesseract.setDatapath(
+                "C:/Program Files/Tesseract-OCR/tessdata"
+            );
             tesseract.setLanguage("eng");
             return tesseract.doOCR(image);
         } catch (TesseractException | RuntimeException | LinkageError e) {

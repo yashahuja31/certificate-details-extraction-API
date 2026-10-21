@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Certificate Details Extraction API",
+    "locale": "en",
+    "output": ".archify/architecture-certificate-extraction-api-20261021-153736/certificate-extraction-architecture.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/yashahuja31/certificate-details-extraction-API.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "c314ff32424df17c0792892d6cf51a6e6b6dfb3f"
+    }
+  },
+  "components": [
+    {
+      "id": "api-client",
+      "type": "external",
+      "label": "API Client",
+      "sublabel": "HTTP POST JSON",
+      "pos": [40, 330],
+      "size": [120, 60],
+      "sources": [
+        { "path": "README.md", "line": 110, "end_line": 125, "label": "request contract" },
+        { "path": "docs/openapi.yaml", "line": 9, "end_line": 25, "label": "extract endpoint" }
+      ]
+    },
+    {
+      "id": "cli-client",
+      "type": "external",
+      "label": "CLI Client",
+      "sublabel": "java -jar --extract <path>",
+      "pos": [40, 500],
+      "size": [165, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/client/CertificateCli.java", "line": 96, "end_line": 113, "label": "builds JSON, POSTs" },
+        { "path": "src/main/java/com/example/certificates/CertificateApiApplication.java", "line": 14, "end_line": 18, "label": "--extract dispatch" }
+      ]
+    },
+    {
+      "id": "local-file",
+      "type": "database",
+      "label": "Certificate File",
+      "sublabel": "pdf · png · jpg · ≤ 10 MB",
+      "pos": [40, 650],
+      "size": [165, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/client/CertificateCli.java", "line": 76, "end_line": 95, "label": "reads local file" }
+      ]
+    },
+    {
+      "id": "api-controller",
+      "type": "backend",
+      "label": "REST API",
+      "sublabel": "Spring Boot :8080",
+      "tag": "no auth",
+      "pos": [260, 330],
+      "size": [130, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/api/CertificateController.java", "line": 23, "end_line": 26, "label": "POST /extract" }
+      ]
+    },
+    {
+      "id": "ingest-guard",
+      "type": "backend",
+      "label": "Ingest Guard",
+      "sublabel": "decode · 10 MB · sig",
+      "pos": [457, 330],
+      "size": [130, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/CertificateExtractionService.java", "line": 23, "end_line": 64, "label": "validate, decode, limit, signature" }
+      ]
+    },
+    {
+      "id": "text-extractor",
+      "type": "backend",
+      "label": "Text Extractor",
+      "sublabel": "embedded text → OCR",
+      "pos": [642, 330],
+      "size": [135, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 37, "end_line": 65, "label": "PDF text, then OCR fallback" }
+      ]
+    },
+    {
+      "id": "field-parser",
+      "type": "backend",
+      "label": "Field Parser",
+      "sublabel": "label + regex rules",
+      "pos": [824, 330],
+      "size": [130, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/CertificateFieldParser.java", "line": 53, "end_line": 59, "label": "extracts six fields" }
+      ]
+    },
+    {
+      "id": "status-evaluator",
+      "type": "backend",
+      "label": "Status Evaluator",
+      "sublabel": "valid · expired · unknown",
+      "pos": [1014, 330],
+      "size": [150, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/CertificateFieldParser.java", "line": 62, "end_line": 69, "label": "expiry vs UTC today" }
+      ]
+    },
+    {
+      "id": "error-handler",
+      "type": "backend",
+      "label": "Error Handler",
+      "sublabel": "structured error JSON",
+      "pos": [440, 500],
+      "size": [165, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/exception/GlobalExceptionHandler.java", "line": 14, "end_line": 46, "label": "advice for all failures" }
+      ]
+    },
+    {
+      "id": "pdfbox",
+      "type": "external",
+      "label": "Apache PDFBox",
+      "sublabel": "text + 220 DPI render",
+      "pos": [340, 150],
+      "size": [150, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 42, "end_line": 55, "label": "PDFTextStripper + PDFRenderer" }
+      ]
+    },
+    {
+      "id": "tesseract",
+      "type": "external",
+      "label": "Tesseract OCR",
+      "sublabel": "in-process · eng",
+      "pos": [620, 150],
+      "size": [150, 60],
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 67, "end_line": 76, "label": "Tess4J doOCR" }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Spring Boot server · single JVM process",
+      "wraps": ["api-controller", "ingest-guard", "text-extractor", "field-parser", "status-evaluator", "error-handler"],
+      "pad": 20
+    },
+    {
+      "kind": "region",
+      "label": "Local native runtime · no network egress",
+      "wraps": ["pdfbox", "tesseract"],
+      "pad": 20
+    }
+  ],
+  "connections": [
+    { "id": "client-post", "from": "api-client", "to": "api-controller", "label": "POST JSON", "variant": "emphasis" },
+    { "id": "cli-post", "from": "cli-client", "to": "api-controller", "label": "POST JSON", "variant": "emphasis", "route": "straight" },
+    { "id": "file-read", "from": "local-file", "to": "cli-client", "label": "read bytes" },
+    { "id": "api-guard", "from": "api-controller", "to": "ingest-guard", "label": "request", "variant": "emphasis" },
+    { "id": "guard-bytes", "from": "ingest-guard", "to": "text-extractor", "label": "bytes", "variant": "emphasis" },
+    { "id": "extractor-pdf", "from": "text-extractor", "to": "pdfbox", "label": "PDF text / render", "route": "straight" },
+    { "id": "pdf-ocr", "from": "pdfbox", "to": "tesseract", "label": "rendered pages" },
+    { "id": "extractor-ocr", "from": "text-extractor", "to": "tesseract", "label": "OCR image", "route": "straight" },
+    { "id": "extractor-parse", "from": "text-extractor", "to": "field-parser", "label": "text", "variant": "emphasis" },
+    { "id": "parse-status", "from": "field-parser", "to": "status-evaluator", "label": "fields", "variant": "emphasis" },
+    { "id": "guard-error", "from": "ingest-guard", "to": "error-handler", "label": "ApiException" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Primary Path",
+      "items": [
+        "POST /api/certificates/extract takes {certificate, fileType} and returns {certificateNumber, holderName, certificateName, issuer, issueDate, expiryDate, status}",
+        "The Java CLI is a thin client: it Base64-encodes a local file and calls the same endpoint, so extraction happens only on the server",
+        "Missing or ambiguous fields stay null — the parser never guesses a value"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Local Processing Only",
+      "items": [
+        "PDFBox and Tess4J/Tesseract are in-process libraries: no network call leaves the host and no AI or external OCR service is contacted",
+        "Scanned PDFs are rendered at 220 DPI and OCR'd for at most 5 pages; PNG/JPG/JPEG images go straight to OCR",
+        "OCR needs a native Tesseract runtime on the host (README notes the Microsoft Visual C++ Redistributable on Windows)"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Trust Boundary",
+      "items": [
+        "Untrusted Base64 is validated before parsing: fileType allow-list, non-empty and ≤ 10 MB decoded, magic-byte signature matched to fileType",
+        "Failures return a structured error envelope with a code; stack traces, Base64 and certificate text are never returned",
+        "The CLI applies the same 10 MB limit locally before uploading"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "Marked Unknowns",
+      "items": [
+        "No authentication or authorization is configured in this repository — the endpoint is open on :8080",
+        "Deployment target, TLS termination and runtime hardening are not configured here; the README only documents local `java -jar` runs",
+        "There is no persistence layer: extracted fields are returned and discarded, and issuer authenticity or digital signatures are never verified"
+      ]
+    }
+  ]
+}
