@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\workflow-extraction-flow-20261021-161559\\candidate.json",
+    "sha256": "5714bd075ecf896a54f665c7e78bfbe8e0b48e518d9eb8b794b48ecc86eea582",
+    "bytes": 5846
+  },
+  "artifact": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extraction-flow-workflow.html",
+    "sha256": "4ecab53b19ffb6e17737502ffae4e67c3656f700cb74c9fb17dbf5b5cea17ba0",
+    "bytes": 826128
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extraction-flow-workflow.finalize.json",
+    "summaryReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extraction-flow-workflow.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extraction-flow-workflow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-21T10:10:37.229Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4362,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

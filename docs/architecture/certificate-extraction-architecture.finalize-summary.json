@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\architecture-certificate-extraction-api-20261021-155015\\candidate.json",
+    "sha256": "74509bc92ad99e64a16da14ead923e03b18bf9ba277d289d8d29401730e21ceb",
+    "bytes": 8570
+  },
+  "artifact": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\certificate-extraction-architecture.html",
+    "sha256": "491d65c2c00d9ebd572b82d847c456fe084e1570fc4d9d7164e880db5c8a779b",
+    "bytes": 835974
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\certificate-extraction-architecture.finalize.json",
+    "summaryReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\certificate-extraction-architecture.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\certificate-extraction-architecture.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-21T10:10:37.229Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3397,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "diagram_type": "timeline",
+  "meta": {
+    "title": "Repository History",
+    "locale": "en",
+    "output": "docs/architecture/repo-history-timeline.html",
+    "quality_profile": "showcase",
+    "evidence": "observed",
+    "timezone": "Asia/Kolkata",
+    "repository": {
+      "url": "https://github.com/yashahuja31/certificate-details-extraction-API.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "759f06e4c26946d95f743923912285651e293247"
+    }
+  },
+  "layout": { "breaks": "auto" },
+  "lanes": [
+    { "id": "code", "label": "Application code" },
+    { "id": "tests", "label": "Tests & samples" },
+    { "id": "docs", "label": "Docs & build" },
+    { "id": "tooling", "label": "Diagram tooling" }
+  ],
+  "events": [
+    {
+      "id": "readme",
+      "at": "2026-10-19T19:26:56+05:30",
+      "title": "README added",
+      "detail": "Project overview, API contract and build/run instructions land first.",
+      "lane": "docs",
+      "kind": "change",
+      "sources": [{ "path": "README.md", "line": 1, "end_line": 5, "label": "readme" }]
+    },
+    {
+      "id": "assignment",
+      "at": "2026-10-19T19:29:23+05:30",
+      "title": "Assignment brief added",
+      "detail": "The original backend assignment text is recorded in the repo.",
+      "lane": "docs",
+      "kind": "default",
+      "sources": [{ "path": "Backend Development Assignment.txt", "line": 1, "end_line": 5, "label": "assignment brief" }]
+    },
+    {
+      "id": "application",
+      "at": "2026-10-19T19:38:37+05:30",
+      "title": "Whole application added",
+      "detail": "All 13 Java sources plus application.properties in one commit: controller, service, parser, extractor, CLI, models and error handling.",
+      "lane": "code",
+      "kind": "change",
+      "sources": [{ "path": "src/main/java/com/example/certificates/CertificateApiApplication.java", "line": 1, "end_line": 21, "label": "bootstrap" }]
+    },
+    {
+      "id": "tests",
+      "at": "2026-10-19T19:39:14+05:30",
+      "title": "Test suite added",
+      "detail": "Five JUnit classes and eight synthetic certificate fixtures.",
+      "lane": "tests",
+      "kind": "change",
+      "sources": [{ "path": "src/test/java/com/example/certificates/api/CertificateApiEndToEndTest.java", "line": 1, "end_line": 20, "label": "end to end test" }]
+    },
+    {
+      "id": "samples",
+      "at": "2026-10-19T19:46:09+05:30",
+      "title": "Manual samples added",
+      "detail": "Nine synthetic certificates, each documented with its expected status.",
+      "lane": "tests",
+      "kind": "default",
+      "sources": [{ "path": "samples/README.txt", "line": 1, "end_line": 8, "label": "sample catalogue" }]
+    },
+    {
+      "id": "outputs",
+      "at": "2026-10-19T19:47:10+05:30",
+      "title": "Response screenshots added",
+      "detail": "Sixteen PNGs capturing the CLI response for each sample certificate.",
+      "lane": "tests",
+      "kind": "default",
+      "sources": [{ "path": "samples-outputs/valid response 1.png", "label": "captured response" }]
+    },
+    {
+      "id": "build",
+      "at": "2026-10-19T19:48:01+05:30",
+      "title": "Maven build added",
+      "detail": "pom.xml pins Spring Boot 3.5.16, PDFBox 3.0.8 and Tess4J 5.19.0.",
+      "lane": "docs",
+      "kind": "change",
+      "sources": [{ "path": "pom.xml", "line": 1, "end_line": 21, "label": "build file" }]
+    },
+    {
+      "id": "api-docs",
+      "at": "2026-10-19T19:48:30+05:30",
+      "title": "OpenAPI docs added",
+      "detail": "openapi.yaml, five request/response examples and the first .gitignore.",
+      "lane": "docs",
+      "kind": "change",
+      "sources": [{ "path": "docs/openapi.yaml", "line": 1, "end_line": 7, "label": "openapi spec" }]
+    },
+    {
+      "id": "ocr",
+      "at": "2026-10-21T15:44:46+05:30",
+      "title": "OCR datapath pinned",
+      "detail": "runOcr now sets a hard-coded host tessdata path, so image certificates can be scanned. The same commit adds the first architecture diagram.",
+      "lane": "code",
+      "kind": "change",
+      "sources": [{ "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 67, "end_line": 79, "label": "ocr call" }]
+    },
+    {
+      "id": "diagram-removed",
+      "at": "2026-10-21T15:46:12+05:30",
+      "title": "Diagram output removed",
+      "detail": "The generated .archify folder is deleted from the repository.",
+      "lane": "tooling",
+      "kind": "change"
+    },
+    {
+      "id": "archify-ignored",
+      "at": "2026-10-21T15:46:49+05:30",
+      "title": ".archify gitignored",
+      "detail": "Generated diagram output is excluded from version control; the deliverable moves to docs/architecture/.",
+      "lane": "tooling",
+      "kind": "change",
+      "sources": [{ "path": ".gitignore", "line": 1, "end_line": 9, "label": "ignore rules" }]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "One Build-Out",
+      "items": [
+        "October 19 is a single ~21 minute session: readme, brief, all application code, tests, samples, build and API docs",
+        "The entire backend lands in one commit (b30aa40) with no incremental history to review",
+        "Sample fixtures and captured response screenshots are the only non-code artefacts"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "One Behaviour Change",
+      "items": [
+        "October 21 (205891e) is the only commit that changes runtime behaviour: Tesseract gets an explicit host datapath",
+        "That change is what makes the OCR image path work on a Windows host with Tesseract installed",
+        "Everything else on October 21 is diagram housekeeping, not product code"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "How to Read",
+      "items": [
+        "Event times are the commits' own timestamps; author and committer dates are identical on this branch",
+        "The axis break marks the two-day gap between the build-out and the OCR change",
+        "The two housekeeping commits have no citable file at this revision — the paths they touched were deleted or excluded — so they are read from git history alone"
+      ]
+    }
+  ]
+}

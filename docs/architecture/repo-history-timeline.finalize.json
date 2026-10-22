@@ -1,0 +1,987 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "timeline",
+  "quality": "showcase",
+  "startedAt": "2026-10-21T10:48:23.066Z",
+  "specification": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\timeline-repo-history-20261021-161559\\candidate.json",
+    "sha256": "9dde982b4a9c8d314a701ba01458a63db8560254b3656680890c711710d1e979",
+    "bytes": 6180
+  },
+  "artifact": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.html",
+    "sha256": "36ef52131ddbec864a537a914cce77cc8ee2d92817c96ac8c36c3768645a8030",
+    "bytes": 831440
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\YashAhuja\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "deliver",
+        "timeline",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\timeline-repo-history-20261021-161559\\candidate.json",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "9dde982b4a9c8d314a701ba01458a63db8560254b3656680890c711710d1e979",
+          "bytes": 6180
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 800,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\YashAhuja\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "deliver",
+        "timeline",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\timeline-repo-history-20261021-161559\\candidate.json",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "d345a52d-4347-4769-9913-65fdf5f82c7d",
+        "ok": true,
+        "command": "deliver",
+        "type": "timeline",
+        "input": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\timeline-repo-history-20261021-161559\\candidate.json",
+        "output": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.html",
+        "specification": {
+          "sha256": "9dde982b4a9c8d314a701ba01458a63db8560254b3656680890c711710d1e979",
+          "bytes": 6180
+        },
+        "artifact": {
+          "sha256": "36ef52131ddbec864a537a914cce77cc8ee2d92817c96ac8c36c3768645a8030",
+          "bytes": 831440
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "evidence": {
+          "verified": true,
+          "repository": "https://github.com/yashahuja31/certificate-details-extraction-API",
+          "revision": "759f06e4c26946d95f743923912285651e293247",
+          "references": 10
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 235,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\YashAhuja\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "check",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.html",
+        "artifact": {
+          "sha256": "36ef52131ddbec864a537a914cce77cc8ee2d92817c96ac8c36c3768645a8030",
+          "bytes": 831440
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 0,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": null,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 9.910485933503836,
+            "maxBends": 0,
+            "routesOverSuggestedBends": 0,
+            "maxStretch": null,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": null,
+            "minInteriorSegmentPx": null,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [],
+            "detours": []
+          },
+          "leadingSpace": {
+            "measured": false,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": 7.5,
+            "requestedTargetMet": true,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "readme"
+            },
+            "minimumSourceTextPx": 12.5,
+            "minimumProjectedTextPx": 9.910485933503836,
+            "semanticTextCount": 11
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "d345a52d-4347-4769-9913-65fdf5f82c7d"
+      }
+    },
+    "browser-check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 2555,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\YashAhuja\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "browser-check",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.html",
+        "--json",
+        "--require-provenance"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "pass",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "d345a52d-4347-4769-9913-65fdf5f82c7d",
+        "artifact": {
+          "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.html",
+          "sha256": "36ef52131ddbec864a537a914cce77cc8ee2d92817c96ac8c36c3768645a8030",
+          "bytes": 831440
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+        },
+        "diagnostics": [],
+        "containment": {
+          "status": "pass",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 900,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1168,
+              "diagramWidth": 1138,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 746,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.127024722932651,
+              "minimumProjectedNonEdgeTextPx": 12.127024722932651,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1220,
+              "diagramWidth": 1190,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 780,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.5,
+              "minimumProjectedNonEdgeTextPx": 12.5,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1342,
+              "diagramWidth": 1312,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 860,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.5,
+              "minimumProjectedNonEdgeTextPx": 12.5,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1700,
+              "diagramWidth": 1650,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1082,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.5,
+              "minimumProjectedNonEdgeTextPx": 12.5,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "themeStates": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            }
+          ]
+        },
+        "readability": {
+          "status": "pass",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 900,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1168,
+              "diagramWidth": 1138,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 746,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.127024722932651,
+              "minimumProjectedNonEdgeTextPx": 12.127024722932651,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1220,
+              "diagramWidth": 1190,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 780,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.5,
+              "minimumProjectedNonEdgeTextPx": 12.5,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1342,
+              "diagramWidth": 1312,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 860,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.5,
+              "minimumProjectedNonEdgeTextPx": 12.5,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1700,
+              "diagramWidth": 1650,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1082,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.5,
+              "minimumProjectedNonEdgeTextPx": 12.5,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "viewerChrome": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 900,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1168,
+              "diagramWidth": 1138,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 746,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.127024722932651,
+              "minimumProjectedNonEdgeTextPx": 12.127024722932651,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1220,
+              "diagramWidth": 1190,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 780,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.5,
+              "minimumProjectedNonEdgeTextPx": 12.5,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1342,
+              "diagramWidth": 1312,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 860,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.5,
+              "minimumProjectedNonEdgeTextPx": 12.5,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1700,
+              "diagramWidth": 1650,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1082,
+                "cardsPx": 0,
+                "viewBoxHeight": 769
+              },
+              "viewBoxWidth": 1173,
+              "minimumProjectedNodeTextPx": 12.5,
+              "minimumProjectedNonEdgeTextPx": 12.5,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "README added",
+              "minimumProjectedNodeTextDetail": "primary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "readme"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "receipt": "repo-history-timeline.browser-check.json",
+          "files": []
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.finalize.json",
+    "summaryReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-10-21T10:48:27.228Z",
+  "durationMs": 4162,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-21T10:10:37.229Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

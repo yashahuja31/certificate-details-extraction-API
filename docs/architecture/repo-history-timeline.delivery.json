@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "d345a52d-4347-4769-9913-65fdf5f82c7d",
+  "status": "current",
+  "command": "deliver",
+  "type": "timeline",
+  "input": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\timeline-repo-history-20261021-161559\\candidate.json",
+  "output": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\repo-history-timeline.html",
+  "specification": {
+    "sha256": "9dde982b4a9c8d314a701ba01458a63db8560254b3656680890c711710d1e979",
+    "bytes": 6180
+  },
+  "artifact": {
+    "sha256": "36ef52131ddbec864a537a914cce77cc8ee2d92817c96ac8c36c3768645a8030",
+    "bytes": 831440
+  }
+}

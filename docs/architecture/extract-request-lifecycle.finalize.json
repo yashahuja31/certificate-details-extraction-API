@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "startedAt": "2026-10-21T10:48:13.308Z",
+  "specification": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\lifecycle-extract-request-20261021-161559\\candidate.json",
+    "sha256": "8979c99196fbf9aeaf965918272cc0ce6920437753ccdde31019b41b153d9dbe",
+    "bytes": 7305
+  },
+  "artifact": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-lifecycle.html"
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\YashAhuja\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "deliver",
+        "lifecycle",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\lifecycle-extract-request-20261021-161559\\candidate.json",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-lifecycle.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "acebd51a-14d2-45f5-96e0-0f4691b016ca",
+        "stage": "render",
+        "type": "lifecycle",
+        "input": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\lifecycle-extract-request-20261021-161559\\candidate.json",
+        "output": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-lifecycle.html",
+        "error": "Lifecycle layout validation failed:\n- The lifecycle is 1984px wide; at 9px text it stays readable on a desktop only up to 1395px. Transition labels or notes widen their main-path gaps.",
+        "diagnostics": [
+          {
+            "code": "lifecycle/too-wide",
+            "severity": "error",
+            "message": "The lifecycle is 1984px wide; at 9px text it stays readable on a desktop only up to 1395px. Transition labels or notes widen their main-path gaps.",
+            "subject": {
+              "diagramType": "lifecycle",
+              "path": "/mainPath"
+            },
+            "evidence": {
+              "viewBoxWidth": 1984,
+              "budgetPx": 1395,
+              "mainPathStates": 6,
+              "lowerRowStates": 7,
+              "wideStepLabels": [
+                {
+                  "from": "validated",
+                  "to": "decoded",
+                  "label": "type allowed · Base64 decoded",
+                  "excessPx": 140,
+                  "widthDriver": "label"
+                },
+                {
+                  "from": "decoded",
+                  "to": "text_extracted",
+                  "label": "size + signature ok",
+                  "excessPx": 80,
+                  "widthDriver": "label"
+                },
+                {
+                  "from": "parsed",
+                  "to": "responded",
+                  "label": "details + status",
+                  "excessPx": 62,
+                  "widthDriver": "label"
+                },
+                {
+                  "from": "received",
+                  "to": "validated",
+                  "label": "fields present",
+                  "excessPx": 50,
+                  "widthDriver": "label"
+                },
+                {
+                  "from": "text_extracted",
+                  "to": "parsed",
+                  "label": "text obtained",
+                  "excessPx": 44,
+                  "widthDriver": "label"
+                }
+              ],
+              "spacingWideners": []
+            },
+            "supportedFixes": [
+              "review the width-driving main-path transition text: \"validated\" -> \"decoded\" label (+140px), \"decoded\" -> \"text_extracted\" label (+80px), \"parsed\" -> \"responded\" label (+62px), \"received\" -> \"validated\" label (+50px), \"text_extracted\" -> \"parsed\" label (+44px); preserve every condition; shorten wording only, or move complete detail to a card explicitly associated with the same transition; shorter wording may not resolve other layout constraints",
+              "shorten state labels and sublabels",
+              "move secondary phases off mainPath or merge adjacent phases",
+              "split the lifecycle into two diagrams"
+            ]
+          }
+        ],
+        "provenance": "absent",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "lifecycle/too-wide",
+      "severity": "error",
+      "message": "The lifecycle is 1984px wide; at 9px text it stays readable on a desktop only up to 1395px. Transition labels or notes widen their main-path gaps.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "path": "/mainPath"
+      },
+      "evidence": {
+        "viewBoxWidth": 1984,
+        "budgetPx": 1395,
+        "mainPathStates": 6,
+        "lowerRowStates": 7,
+        "wideStepLabels": [
+          {
+            "from": "validated",
+            "to": "decoded",
+            "label": "type allowed · Base64 decoded",
+            "excessPx": 140,
+            "widthDriver": "label"
+          },
+          {
+            "from": "decoded",
+            "to": "text_extracted",
+            "label": "size + signature ok",
+            "excessPx": 80,
+            "widthDriver": "label"
+          },
+          {
+            "from": "parsed",
+            "to": "responded",
+            "label": "details + status",
+            "excessPx": 62,
+            "widthDriver": "label"
+          },
+          {
+            "from": "received",
+            "to": "validated",
+            "label": "fields present",
+            "excessPx": 50,
+            "widthDriver": "label"
+          },
+          {
+            "from": "text_extracted",
+            "to": "parsed",
+            "label": "text obtained",
+            "excessPx": 44,
+            "widthDriver": "label"
+          }
+        ],
+        "spacingWideners": []
+      },
+      "supportedFixes": [
+        "review the width-driving main-path transition text: \"validated\" -> \"decoded\" label (+140px), \"decoded\" -> \"text_extracted\" label (+80px), \"parsed\" -> \"responded\" label (+62px), \"received\" -> \"validated\" label (+50px), \"text_extracted\" -> \"parsed\" label (+44px); preserve every condition; shorten wording only, or move complete detail to a card explicitly associated with the same transition; shorter wording may not resolve other layout constraints",
+        "shorten state labels and sublabels",
+        "move secondary phases off mainPath or merge adjacent phases",
+        "split the lifecycle into two diagrams"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-lifecycle.finalize.json",
+    "summaryReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-lifecycle.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-21T10:48:14.007Z",
+  "durationMs": 698,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-21T10:10:37.229Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Certificate Extraction Flow",
+    "locale": "en",
+    "output": "docs/architecture/extraction-flow-workflow.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/yashahuja31/certificate-details-extraction-API.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "759f06e4c26946d95f743923912285651e293247"
+    },
+    "legend": {
+      "entries": {
+        "backend": { "label": "Server" },
+        "external": { "label": "Local runtime" },
+        "security": { "label": "Failure exit" }
+      }
+    }
+  },
+  "lanes": [
+    { "id": "api", "label": "Server · Spring Boot" },
+    { "id": "native", "label": "Local runtime · no network egress" },
+    { "id": "err", "label": "Failure exit", "variant": "exception" }
+  ],
+  "mainPath": ["post", "validate", "extract", "parse", "status", "respond"],
+  "nodes": [
+    { "id": "post", "lane": "api", "col": 0, "type": "backend", "label": "POST /extract", "sublabel": "Base64 JSON body", "icon": "start", "sources": [{ "path": "src/main/java/com/example/certificates/api/CertificateController.java", "line": 23, "end_line": 26, "label": "extract endpoint" }] },
+    { "id": "validate", "lane": "api", "col": 1, "type": "backend", "label": "Validate", "sublabel": "type · 10 MB · signature", "icon": "decision", "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateExtractionService.java", "line": 23, "end_line": 64, "label": "validation and decode" }] },
+    { "id": "extract", "lane": "api", "col": 2, "type": "backend", "label": "Extract text", "sublabel": "PDF text, else render + OCR", "icon": "active", "sources": [{ "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 37, "end_line": 65, "label": "text extraction" }] },
+    { "id": "parse", "lane": "api", "col": 3, "type": "backend", "label": "Parse fields", "sublabel": "6 label + regex rules", "icon": "active", "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateFieldParser.java", "line": 53, "end_line": 60, "label": "field parsing" }] },
+    { "id": "status", "lane": "api", "col": 4, "type": "backend", "label": "Compute status", "sublabel": "expiry vs today (UTC)", "icon": "active", "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateFieldParser.java", "line": 62, "end_line": 69, "label": "status rule" }] },
+    { "id": "respond", "lane": "api", "col": 5, "type": "backend", "label": "Respond 200", "sublabel": "ExtractionResponse JSON", "icon": "success", "sources": [{ "path": "src/main/java/com/example/certificates/api/CertificateController.java", "line": 24, "end_line": 26, "label": "builds response" }] },
+
+    { "id": "ocr", "lane": "native", "col": 2, "type": "external", "label": "Tesseract OCR", "sublabel": "host install, eng", "icon": "external", "sources": [{ "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 67, "end_line": 79, "label": "Tess4J doOCR" }] },
+
+    { "id": "reject", "lane": "err", "col": 1, "type": "security", "label": "Reject", "sublabel": "400 / 413 error JSON", "icon": "failure", "sources": [{ "path": "src/main/java/com/example/certificates/exception/GlobalExceptionHandler.java", "line": 14, "end_line": 46, "label": "error envelope" }] },
+    { "id": "unreadable", "lane": "err", "col": 2, "type": "security", "label": "Unreadable", "sublabel": "422 error JSON", "icon": "failure", "sources": [{ "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 56, "end_line": 58, "label": "no readable text" }] }
+  ],
+  "edges": [
+    { "id": "post-validate", "from": "post", "to": "validate", "role": "main" },
+    { "id": "validate-extract", "from": "validate", "to": "extract", "label": "bytes ok", "role": "main" },
+    { "id": "extract-parse", "from": "extract", "to": "parse", "label": "text", "role": "main" },
+    { "id": "parse-status", "from": "parse", "to": "status", "label": "fields", "role": "main" },
+    { "id": "status-respond", "from": "status", "to": "respond", "label": "status", "role": "main" },
+    { "id": "validate-reject", "from": "validate", "to": "reject", "label": "type / size / signature", "role": "error", "variant": "security" },
+    { "id": "extract-unreadable", "from": "extract", "to": "unreadable", "label": "OCR failed or blank text", "role": "error", "variant": "security" },
+    { "id": "extract-ocr", "from": "extract", "to": "ocr", "label": "no embedded text", "role": "branch" },
+    { "id": "ocr-extract", "from": "ocr", "to": "extract", "label": "plain text", "role": "return" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Main Path",
+      "items": [
+        "Six steps: accept, validate, extract text, parse fields, compute status, respond",
+        "Every step is a method call inside one JVM — no queue, no retry loop, no persistence",
+        "The Java CLI enters at the same first step by POSTing the same JSON body"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "The OCR Branch",
+      "items": [
+        "PDFs first try embedded text; only when there is almost none does the renderer kick in",
+        "Rendered pages go to Tesseract at 220 DPI, at most 5 pages per document",
+        "PNG, JPG and JPEG images skip PDFBox entirely and go straight to OCR"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Failure Exits",
+      "items": [
+        "Validation failures exit as 400 or 413 before any parsing work is attempted",
+        "A document that cannot be read, or an OCR runtime that is not installed, exits as 422",
+        "Both exits return the same structured envelope; no stack trace or certificate text is echoed back"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "086dfc29-8d06-4762-a74e-1bf5905fb15d",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\sequence-extract-request-20261021-161559\\candidate.json",
+  "output": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-sequence.html",
+  "specification": {
+    "sha256": "44685340d19ecc4d23a08fd3b9611e1d7a2cd6b762a2e3d02e6188138be14372",
+    "bytes": 5606
+  },
+  "artifact": {
+    "sha256": "e99a39f619c1463dc6eaf34a2f386e9fd238346e3d5e7b338eb330dc234e0ce0",
+    "bytes": 820797
+  }
+}

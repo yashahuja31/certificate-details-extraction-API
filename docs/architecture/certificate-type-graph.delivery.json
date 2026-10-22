@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "7c91fe0c-3a4b-4d20-b4ee-c6d0016d7a3e",
+  "status": "current",
+  "command": "deliver",
+  "type": "class",
+  "input": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\class-certificate-types-20261021-161559\\candidate.json",
+  "output": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\certificate-type-graph.html",
+  "specification": {
+    "sha256": "e825d0cf64fef853ded49241553d4280ae5d0c2e65b8567a9a53495811307107",
+    "bytes": 10477
+  },
+  "artifact": {
+    "sha256": "61a47973c217ff1d7ef6a4d8edb33b1dab37588d036690c48dd54ed10e049b34",
+    "bytes": 855294
+  }
+}

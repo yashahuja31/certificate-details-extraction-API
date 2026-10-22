@@ -1,0 +1,225 @@
+{
+  "schema_version": 1,
+  "diagram_type": "class",
+  "meta": {
+    "title": "Certificate API Type Graph",
+    "locale": "en",
+    "output": "docs/architecture/certificate-type-graph.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/yashahuja31/certificate-details-extraction-API.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "759f06e4c26946d95f743923912285651e293247"
+    }
+  },
+  "layout": { "mode": "grid" },
+  "types": [
+    {
+      "id": "extract_request",
+      "label": "ExtractRequest",
+      "kind": "record",
+      "sublabel": "Request body",
+      "row": 0,
+      "col": 0,
+      "attributes": [
+        { "name": "certificate", "type": "String", "visibility": "public" },
+        { "name": "fileType", "type": "String", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/model/ExtractRequest.java", "line": 1, "end_line": 8, "label": "record definition" }]
+    },
+    {
+      "id": "certificate_controller",
+      "label": "CertificateController",
+      "kind": "class",
+      "sublabel": "REST entry point",
+      "row": 0,
+      "col": 1,
+      "methods": [
+        { "name": "extract", "parameters": "request: ExtractRequest", "returns": "ExtractionResponse", "visibility": "public" },
+        { "name": "health", "returns": "Map", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/api/CertificateController.java", "line": 16, "end_line": 31, "label": "controller" }]
+    },
+    {
+      "id": "extraction_response",
+      "label": "ExtractionResponse",
+      "kind": "record",
+      "sublabel": "200 response body",
+      "row": 0,
+      "col": 2,
+      "attributes": [
+        { "name": "success", "type": "boolean", "visibility": "public" },
+        { "name": "message", "type": "String", "visibility": "public" },
+        { "name": "data", "type": "CertificateDetails", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/model/ExtractionResponse.java", "line": 1, "end_line": 3, "label": "record definition" }]
+    },
+    {
+      "id": "document_text_extractor",
+      "label": "DocumentTextExtractor",
+      "kind": "class",
+      "sublabel": "PDF text, then OCR",
+      "row": 1,
+      "col": 0,
+      "methods": [
+        { "name": "extractFromPdf", "parameters": "bytes: byte[]", "returns": "String", "visibility": "public" },
+        { "name": "extractFromImage", "parameters": "bytes: byte[]", "returns": "String", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 20, "end_line": 65, "label": "extractor" }]
+    },
+    {
+      "id": "certificate_extraction_service",
+      "label": "CertificateExtractionService",
+      "kind": "class",
+      "sublabel": "Validates, decodes, delegates",
+      "row": 1,
+      "col": 1,
+      "attributes": [
+        { "name": "textExtractor", "type": "DocumentTextExtractor", "visibility": "private" },
+        { "name": "parser", "type": "CertificateFieldParser", "visibility": "private" }
+      ],
+      "methods": [
+        { "name": "extract", "parameters": "request: ExtractRequest", "returns": "CertificateDetails", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateExtractionService.java", "line": 12, "end_line": 69, "label": "service" }]
+    },
+    {
+      "id": "certificate_field_parser",
+      "label": "CertificateFieldParser",
+      "kind": "class",
+      "sublabel": "Label and regex rules",
+      "row": 1,
+      "col": 2,
+      "methods": [
+        { "name": "parse", "parameters": "text: String", "returns": "CertificateDetails", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateFieldParser.java", "line": 17, "end_line": 71, "label": "parser" }]
+    },
+    {
+      "id": "api_exception",
+      "label": "ApiException",
+      "kind": "class",
+      "sublabel": "Status + machine code",
+      "row": 2,
+      "col": 0,
+      "attributes": [
+        { "name": "status", "type": "HttpStatus", "visibility": "private" },
+        { "name": "code", "type": "String", "visibility": "private" }
+      ],
+      "methods": [
+        { "name": "getStatus", "returns": "HttpStatus", "visibility": "public" },
+        { "name": "getCode", "returns": "String", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/exception/ApiException.java", "line": 5, "end_line": 17, "label": "exception type" }]
+    },
+    {
+      "id": "certificate_details",
+      "label": "CertificateDetails",
+      "kind": "record",
+      "sublabel": "Extracted fields, 4 of 7 shown",
+      "row": 2,
+      "col": 1,
+      "attributes": [
+        { "name": "certificateNumber", "type": "String", "visibility": "public" },
+        { "name": "holderName", "type": "String", "visibility": "public" },
+        { "name": "expiryDate", "type": "String", "visibility": "public" },
+        { "name": "status", "type": "String", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/model/CertificateDetails.java", "line": 3, "end_line": 11, "label": "record definition" }]
+    },
+    {
+      "id": "certificate_cli",
+      "label": "CertificateCli",
+      "kind": "class",
+      "sublabel": "Separate process, HTTP client",
+      "row": 2,
+      "col": 2,
+      "methods": [
+        { "name": "run", "parameters": "args: String[]", "returns": "int", "visibility": "public" },
+        { "name": "main", "parameters": "args: String[]", "returns": "void", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/client/CertificateCli.java", "line": 19, "end_line": 34, "label": "cli client" }]
+    },
+    {
+      "id": "global_exception_handler",
+      "label": "GlobalExceptionHandler",
+      "kind": "class",
+      "sublabel": "Maps failures to envelopes",
+      "row": 3,
+      "col": 0,
+      "methods": [
+        { "name": "handleApiException", "parameters": "ex: ApiException", "returns": "ResponseEntity<ApiErrorResponse>", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/exception/GlobalExceptionHandler.java", "line": 12, "end_line": 46, "label": "advice" }]
+    },
+    {
+      "id": "api_error_response",
+      "label": "ApiErrorResponse",
+      "kind": "record",
+      "sublabel": "Error envelope",
+      "row": 3,
+      "col": 1,
+      "attributes": [
+        { "name": "success", "type": "boolean", "visibility": "public" },
+        { "name": "message", "type": "String", "visibility": "public" },
+        { "name": "error", "type": "ErrorDetail", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/model/ApiErrorResponse.java", "line": 3, "end_line": 5, "label": "record definition" }]
+    },
+    {
+      "id": "certificate_api_application",
+      "label": "CertificateApiApplication",
+      "kind": "class",
+      "sublabel": "Boot entry and --extract dispatch",
+      "row": 3,
+      "col": 2,
+      "methods": [
+        { "name": "main", "parameters": "args: String[]", "returns": "void", "visibility": "public" }
+      ],
+      "sources": [{ "path": "src/main/java/com/example/certificates/CertificateApiApplication.java", "line": 9, "end_line": 20, "label": "bootstrap" }]
+    }
+  ],
+  "relationships": [
+    { "id": "app-dispatches-cli", "from": "certificate_api_application", "to": "certificate_cli", "kind": "dependency", "label": "dispatches --extract" },
+    { "id": "controller-calls-service", "from": "certificate_controller", "to": "certificate_extraction_service", "kind": "dependency", "label": "calls" },
+    { "id": "controller-reads-request", "from": "certificate_controller", "to": "extract_request", "kind": "dependency", "label": "reads" },
+    { "id": "controller-returns-response", "from": "certificate_controller", "to": "extraction_response", "kind": "dependency", "label": "returns" },
+    { "id": "service-uses-extractor", "from": "certificate_extraction_service", "to": "document_text_extractor", "kind": "dependency", "label": "extracts text" },
+    { "id": "service-uses-parser", "from": "certificate_extraction_service", "to": "certificate_field_parser", "kind": "dependency", "label": "parses fields" },
+    { "id": "service-returns-details", "from": "certificate_extraction_service", "to": "certificate_details", "kind": "dependency", "label": "returns" },
+    { "id": "extractor-throws", "from": "document_text_extractor", "to": "api_exception", "kind": "dependency", "label": "throws" },
+    { "id": "parser-creates-details", "from": "certificate_field_parser", "to": "certificate_details", "kind": "dependency", "label": "creates" },
+    { "id": "handler-catches", "from": "global_exception_handler", "to": "api_exception", "kind": "dependency", "label": "catches" },
+    { "id": "handler-returns-envelope", "from": "global_exception_handler", "to": "api_error_response", "kind": "dependency", "label": "returns" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Request Path",
+      "items": [
+        "CertificateExtractionService is the hub: it owns the extractor and the parser and returns CertificateDetails",
+        "The controller is thin — it delegates and wraps the result in ExtractionResponse",
+        "CertificateDetails shows 4 of its 7 components; the others are certificateName, issuer and issueDate"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Error Path",
+      "items": [
+        "ApiException carries an HttpStatus and a machine code; it is the only failure type the app throws deliberately",
+        "GlobalExceptionHandler converts it into ApiErrorResponse, whose nested ErrorDetail holds just the code",
+        "ApiErrorResponse.ErrorDetail is a nested record and is shown by name rather than as its own box"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Two Processes",
+      "items": [
+        "CertificateCli shares the JAR but runs as its own process and talks HTTP to the server",
+        "It has no compile-time link to the controller — the only wiring between them is the JSON contract",
+        "PDFBox and Tesseract are third-party libraries, so they are not types in this graph"
+      ]
+    }
+  ]
+}

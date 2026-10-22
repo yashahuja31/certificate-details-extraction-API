@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "51a4f0be-bf4e-4703-b536-217652675de2",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\workflow-extraction-flow-20261021-161559\\candidate.json",
+  "output": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extraction-flow-workflow.html",
+  "specification": {
+    "sha256": "5714bd075ecf896a54f665c7e78bfbe8e0b48e518d9eb8b794b48ecc86eea582",
+    "bytes": 5846
+  },
+  "artifact": {
+    "sha256": "4ecab53b19ffb6e17737502ffae4e67c3656f700cb74c9fb17dbf5b5cea17ba0",
+    "bytes": 826128
+  }
+}

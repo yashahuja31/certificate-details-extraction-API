@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "startedAt": "2026-10-21T10:48:12.365Z",
+  "specification": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\sequence-extract-request-20261021-161559\\candidate.json",
+    "sha256": "5dda09cd7b86e6387fc05c54c81d529b8c6681bdcf6b7505cb9ad9eaaf1276cb",
+    "bytes": 5647
+  },
+  "artifact": {
+    "path": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-sequence.html"
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\YashAhuja\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "deliver",
+        "sequence",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\sequence-extract-request-20261021-161559\\candidate.json",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-sequence.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "1017d98d-bc9e-4a4d-85a3-b42e2225fb2a",
+        "stage": "render",
+        "type": "sequence",
+        "input": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\sequence-extract-request-20261021-161559\\candidate.json",
+        "output": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-sequence.html",
+        "error": "Sequence layout validation failed:\n- Label \"CertificateController\" (~143px) is wider than component \"controller\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).\n- Label \"CertificateExtractionService\" (~190px) is wider than component \"service\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).\n- Label \"DocumentTextExtractor\" (~143px) is wider than component \"extractor\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).\n- Label \"CertificateFieldParser\" (~150px) is wider than component \"parser\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).\n- Note on message \"extractFromPdf(bytes)\" wraps to 2 lines (down to y=288) and reaches message \"embedded text, else render 220 DPI\" at y=300 — move \"embedded text, else render 220 DPI\" and later messages down so it sits at y=310 or below, or shorten the note.",
+        "diagnostics": [
+          {
+            "code": "sequence/participant-label-overflow",
+            "severity": "error",
+            "message": "Label \"CertificateController\" (~143px) is wider than component \"controller\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).",
+            "subject": {
+              "diagramType": "sequence",
+              "nodeId": "controller",
+              "path": "/participants/1/label"
+            },
+            "evidence": {
+              "viewBoxWidth": 1085,
+              "participantWidth": 136,
+              "text": "CertificateController",
+              "requiredWidth": 142.79999999999998,
+              "availableWidth": 142
+            },
+            "supportedFixes": [
+              "shorten the participant label while preserving its role"
+            ]
+          },
+          {
+            "code": "sequence/participant-label-overflow",
+            "severity": "error",
+            "message": "Label \"CertificateExtractionService\" (~190px) is wider than component \"service\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).",
+            "subject": {
+              "diagramType": "sequence",
+              "nodeId": "service",
+              "path": "/participants/2/label"
+            },
+            "evidence": {
+              "viewBoxWidth": 1085,
+              "participantWidth": 136,
+              "text": "CertificateExtractionService",
+              "requiredWidth": 190.4,
+              "availableWidth": 142
+            },
+            "supportedFixes": [
+              "shorten the participant label while preserving its role"
+            ]
+          },
+          {
+            "code": "sequence/participant-label-overflow",
+            "severity": "error",
+            "message": "Label \"DocumentTextExtractor\" (~143px) is wider than component \"extractor\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).",
+            "subject": {
+              "diagramType": "sequence",
+              "nodeId": "extractor",
+              "path": "/participants/3/label"
+            },
+            "evidence": {
+              "viewBoxWidth": 1085,
+              "participantWidth": 136,
+              "text": "DocumentTextExtractor",
+              "requiredWidth": 142.79999999999998,
+              "availableWidth": 142
+            },
+            "supportedFixes": [
+              "shorten the participant label while preserving its role"
+            ]
+          },
+          {
+            "code": "sequence/participant-label-overflow",
+            "severity": "error",
+            "message": "Label \"CertificateFieldParser\" (~150px) is wider than component \"parser\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).",
+            "subject": {
+              "diagramType": "sequence",
+              "nodeId": "parser",
+              "path": "/participants/5/label"
+            },
+            "evidence": {
+              "viewBoxWidth": 1085,
+              "participantWidth": 136,
+              "text": "CertificateFieldParser",
+              "requiredWidth": 149.6,
+              "availableWidth": 142
+            },
+            "supportedFixes": [
+              "shorten the participant label while preserving its role"
+            ]
+          },
+          {
+            "code": "sequence/note-overlap",
+            "severity": "error",
+            "message": "Note on message \"extractFromPdf(bytes)\" wraps to 2 lines (down to y=288) and reaches message \"embedded text, else render 220 DPI\" at y=300 — move \"embedded text, else render 220 DPI\" and later messages down so it sits at y=310 or below, or shorten the note.",
+            "subject": {
+              "diagramType": "sequence",
+              "message": "extractFromPdf(bytes)",
+              "path": "/messages/2/note",
+              "from": "service",
+              "to": "extractor"
+            },
+            "evidence": {
+              "lines": 2,
+              "note": {
+                "x": 487.8,
+                "y": 264.6,
+                "width": 117.6,
+                "height": 23.4
+              },
+              "blocker": {
+                "message": "embedded text, else render 220 DPI",
+                "path": "/messages/3/y",
+                "y": 300,
+                "kind": "message label",
+                "bounds": {
+                  "x": 604.7,
+                  "y": 280,
+                  "width": 236.4,
+                  "height": 18
+                }
+              },
+              "requiredY": 310
+            },
+            "supportedFixes": [
+              "set /messages/3/y to 310"
+            ]
+          }
+        ],
+        "provenance": "absent",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "sequence/participant-label-overflow",
+      "severity": "error",
+      "message": "Label \"CertificateController\" (~143px) is wider than component \"controller\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).",
+      "subject": {
+        "diagramType": "sequence",
+        "nodeId": "controller",
+        "path": "/participants/1/label"
+      },
+      "evidence": {
+        "viewBoxWidth": 1085,
+        "participantWidth": 136,
+        "text": "CertificateController",
+        "requiredWidth": 142.79999999999998,
+        "availableWidth": 142
+      },
+      "supportedFixes": [
+        "shorten the participant label while preserving its role"
+      ]
+    },
+    {
+      "code": "sequence/participant-label-overflow",
+      "severity": "error",
+      "message": "Label \"CertificateExtractionService\" (~190px) is wider than component \"service\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).",
+      "subject": {
+        "diagramType": "sequence",
+        "nodeId": "service",
+        "path": "/participants/2/label"
+      },
+      "evidence": {
+        "viewBoxWidth": 1085,
+        "participantWidth": 136,
+        "text": "CertificateExtractionService",
+        "requiredWidth": 190.4,
+        "availableWidth": 142
+      },
+      "supportedFixes": [
+        "shorten the participant label while preserving its role"
+      ]
+    },
+    {
+      "code": "sequence/participant-label-overflow",
+      "severity": "error",
+      "message": "Label \"DocumentTextExtractor\" (~143px) is wider than component \"extractor\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).",
+      "subject": {
+        "diagramType": "sequence",
+        "nodeId": "extractor",
+        "path": "/participants/3/label"
+      },
+      "evidence": {
+        "viewBoxWidth": 1085,
+        "participantWidth": 136,
+        "text": "DocumentTextExtractor",
+        "requiredWidth": 142.79999999999998,
+        "availableWidth": 142
+      },
+      "supportedFixes": [
+        "shorten the participant label while preserving its role"
+      ]
+    },
+    {
+      "code": "sequence/participant-label-overflow",
+      "severity": "error",
+      "message": "Label \"CertificateFieldParser\" (~150px) is wider than component \"parser\" — shorten it to at most 20 text units (CJK counts 2; participant boxes are 136px: the automatic 1085px canvas cannot widen further without its 7px sublabels falling below the desktop reading minimum, so keep meta.viewBox omitted).",
+      "subject": {
+        "diagramType": "sequence",
+        "nodeId": "parser",
+        "path": "/participants/5/label"
+      },
+      "evidence": {
+        "viewBoxWidth": 1085,
+        "participantWidth": 136,
+        "text": "CertificateFieldParser",
+        "requiredWidth": 149.6,
+        "availableWidth": 142
+      },
+      "supportedFixes": [
+        "shorten the participant label while preserving its role"
+      ]
+    },
+    {
+      "code": "sequence/note-overlap",
+      "severity": "error",
+      "message": "Note on message \"extractFromPdf(bytes)\" wraps to 2 lines (down to y=288) and reaches message \"embedded text, else render 220 DPI\" at y=300 — move \"embedded text, else render 220 DPI\" and later messages down so it sits at y=310 or below, or shorten the note.",
+      "subject": {
+        "diagramType": "sequence",
+        "message": "extractFromPdf(bytes)",
+        "path": "/messages/2/note",
+        "from": "service",
+        "to": "extractor"
+      },
+      "evidence": {
+        "lines": 2,
+        "note": {
+          "x": 487.8,
+          "y": 264.6,
+          "width": 117.6,
+          "height": 23.4
+        },
+        "blocker": {
+          "message": "embedded text, else render 220 DPI",
+          "path": "/messages/3/y",
+          "y": 300,
+          "kind": "message label",
+          "bounds": {
+            "x": 604.7,
+            "y": 280,
+            "width": 236.4,
+            "height": 18
+          }
+        },
+        "requiredY": 310
+      },
+      "supportedFixes": [
+        "set /messages/3/y to 310"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-sequence.finalize.json",
+    "summaryReceipt": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-sequence.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-21T10:48:13.011Z",
+  "durationMs": 645,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-21T10:10:37.229Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

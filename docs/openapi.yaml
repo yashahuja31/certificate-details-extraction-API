@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: Certificate Details Extraction API
   version: 1.0.0
-  description: Rule-based text extraction using PDFBox and Tesseract OCR. No AI service is used.
+  description: Extracts award-certificate fields with PDFBox/OCR and parses X.509 SSL/TLS certificates directly with Java security APIs. No AI service is used.
 servers:
   - url: http://localhost:8080
 paths:
@@ -22,7 +22,7 @@ paths:
                   description: Base64-encoded file bytes; a data URI prefix is also accepted.
                 fileType:
                   type: string
-                  enum: [pdf, png, jpg, jpeg]
+                  enum: [pdf, png, jpg, jpeg, pem, crt, cer, der]
       responses:
         '200':
           description: Extraction completed; missing fields are null and status may be unknown.
@@ -43,6 +43,20 @@ paths:
                       issueDate: { type: [string, 'null'], format: date }
                       expiryDate: { type: [string, 'null'], format: date }
                       status: { type: string, enum: [valid, expired, unknown] }
+                      certificateType: { type: string, enum: [document, ssl_tls] }
+                      x509:
+                        oneOf:
+                          - type: object
+                            properties:
+                              serialNumber: { type: string }
+                              subject: { type: string }
+                              subjectAlternativeNames:
+                                type: array
+                                items: { type: string }
+                              validFrom: { type: string, format: date-time }
+                              validUntil: { type: string, format: date-time }
+                              signatureAlgorithm: { type: string }
+                          - type: 'null' 
         '400':
           description: Invalid request, invalid Base64, unsupported file type, or file signature mismatch.
         '413':

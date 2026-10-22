@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "POST /api/certificates/extract — Request Lifecycle",
+    "locale": "en",
+    "output": "docs/architecture/extract-request-sequence.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/yashahuja31/certificate-details-extraction-API.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "759f06e4c26946d95f743923912285651e293247"
+    }
+  },
+  "participants": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "Client",
+      "sublabel": "POST JSON",
+      "sources": [
+        { "path": "README.md", "line": 110, "end_line": 125, "label": "request contract" }
+      ]
+    },
+    {
+      "id": "controller",
+      "type": "backend",
+      "label": "Controller",
+      "sublabel": "POST /extract",
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/api/CertificateController.java", "line": 23, "end_line": 26, "label": "extract endpoint" }
+      ]
+    },
+    {
+      "id": "service",
+      "type": "backend",
+      "label": "Service",
+      "sublabel": "validate · decode",
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/CertificateExtractionService.java", "line": 23, "end_line": 49, "label": "validate and decode" }
+      ]
+    },
+    {
+      "id": "extractor",
+      "type": "backend",
+      "label": "Extractor",
+      "sublabel": "PDF text → OCR",
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 37, "end_line": 65, "label": "pdf then ocr fallback" }
+      ]
+    },
+    {
+      "id": "ocr",
+      "type": "external",
+      "label": "Local OCR",
+      "sublabel": "PDFBox + Tesseract",
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 42, "end_line": 55, "label": "PDFTextStripper + PDFRenderer" },
+        { "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 67, "end_line": 79, "label": "Tess4J doOCR" }
+      ]
+    },
+    {
+      "id": "parser",
+      "type": "backend",
+      "label": "Parser",
+      "sublabel": "rules · dates",
+      "sources": [
+        { "path": "src/main/java/com/example/certificates/service/CertificateFieldParser.java", "line": 53, "end_line": 70, "label": "fields and status" }
+      ]
+    }
+  ],
+  "segments": [
+    { "from": 150, "to": 235, "label": "Request" },
+    { "from": 235, "to": 370, "label": "Validate, decode, extract" },
+    { "from": 370, "to": 495, "label": "Parse" },
+    { "from": 495, "to": 585, "label": "Respond" }
+  ],
+  "messages": [
+    { "id": "post-extract", "from": "client", "to": "controller", "y": 170, "label": "POST /api/certificates/extract", "variant": "emphasis" },
+    { "id": "call-extract", "from": "controller", "to": "service", "y": 210, "label": "extract(request)", "variant": "emphasis" },
+    { "id": "extract-text", "from": "service", "to": "extractor", "y": 255, "label": "extractFromPdf(bytes)", "variant": "emphasis", "note": "type, size and signature checked first" },
+    { "id": "read-text", "from": "extractor", "to": "ocr", "y": 315, "label": "embedded text, else render 220 DPI", "variant": "default" },
+    { "id": "plain-text", "from": "ocr", "to": "extractor", "y": 355, "label": "plain text", "variant": "return" },
+    { "id": "text-back", "from": "extractor", "to": "service", "y": 395, "label": "certificate text", "variant": "return" },
+    { "id": "parse-text", "from": "service", "to": "parser", "y": 435, "label": "parse(text)", "variant": "emphasis" },
+    { "id": "details-back", "from": "parser", "to": "service", "y": 475, "label": "CertificateDetails", "variant": "return" },
+    { "id": "result-back", "from": "service", "to": "controller", "y": 515, "label": "details", "variant": "return" },
+    { "id": "response", "from": "controller", "to": "client", "y": 555, "label": "200 ExtractionResponse JSON", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "controller", "from": 170, "to": 560, "type": "backend" },
+    { "participant": "service", "from": 205, "to": 520, "type": "backend" },
+    { "participant": "extractor", "from": 250, "to": 400, "type": "backend" },
+    { "participant": "ocr", "from": 310, "to": 360, "type": "external" },
+    { "participant": "parser", "from": 430, "to": 480, "type": "backend" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Happy Path",
+      "items": [
+        "Controller = CertificateController, Service = CertificateExtractionService, Extractor = DocumentTextExtractor, Parser = CertificateFieldParser",
+        "Every hop is a plain synchronous method call inside one JVM",
+        "The reply is one JSON object; no call leaves the host"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "No External Service",
+      "items": [
+        "PDFBox and Tesseract are libraries, not services — there is no network hop and no AI or cloud OCR call",
+        "PDFs first try embedded text, then fall back to rendering at 220 DPI and OCR (at most 5 pages)",
+        "Images go straight to OCR with no PDFBox involvement"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Failure Surface",
+      "items": [
+        "Any validation failure throws ApiException before the extractor is reached",
+        "GlobalExceptionHandler turns it into a structured error envelope with a code",
+        "The full state-and-failure graph is in the extraction request lifecycle diagram"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b01c7f28-1949-4fe0-a286-15ccd167413e",
+  "status": "current",
+  "command": "deliver",
+  "type": "lifecycle",
+  "input": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\lifecycle-extract-request-20261021-161559\\candidate.json",
+  "output": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\extract-request-lifecycle.html",
+  "specification": {
+    "sha256": "b523d6eab753009216784eb9b5b98ed1ec9dc2bda1f2fe736decd653c0fc743c",
+    "bytes": 6554
+  },
+  "artifact": {
+    "sha256": "a9ead0224927c110be3da5b5da2be537b79b429b1bab965eb9ce75f17adc0e9e",
+    "bytes": 831655
+  }
+}

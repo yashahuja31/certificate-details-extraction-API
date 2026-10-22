@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "7f7e35c2-0a16-45e5-86bb-9a905b1d4425",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\.archify\\architecture-certificate-extraction-api-20261021-155015\\candidate.json",
+  "output": "C:\\Users\\YashAhuja\\Projects\\certificate-details-extraction-API\\docs\\architecture\\certificate-extraction-architecture.html",
+  "specification": {
+    "sha256": "74509bc92ad99e64a16da14ead923e03b18bf9ba277d289d8d29401730e21ceb",
+    "bytes": 8570
+  },
+  "artifact": {
+    "sha256": "491d65c2c00d9ebd572b82d847c456fe084e1570fc4d9d7164e880db5c8a779b",
+    "bytes": 835974
+  }
+}

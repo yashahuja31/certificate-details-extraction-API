@@ -1,0 +1,77 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Extraction Request Lifecycle",
+    "locale": "en",
+    "output": "docs/architecture/extract-request-lifecycle.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/yashahuja31/certificate-details-extraction-API.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "759f06e4c26946d95f743923912285651e293247"
+    }
+  },
+  "mainPath": ["received", "decoded", "text_extracted", "parsed", "responded"],
+  "states": [
+    { "id": "received", "type": "start", "label": "Received", "sublabel": "body read", "tag": "POST", "step": "01", "sources": [{ "path": "src/main/java/com/example/certificates/api/CertificateController.java", "line": 23, "end_line": 26, "label": "extract endpoint" }] },
+    { "id": "decoded", "type": "decision", "label": "Decoded", "sublabel": "bytes", "tag": "gate", "step": "02", "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateExtractionService.java", "line": 33, "end_line": 49, "label": "base64 decode" }] },
+    { "id": "text_extracted", "type": "active", "label": "Text Read", "sublabel": "PDF or OCR", "tag": "local", "step": "03", "sources": [{ "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 37, "end_line": 65, "label": "extract text" }] },
+    { "id": "parsed", "type": "active", "label": "Parsed", "sublabel": "fields", "tag": "rules", "step": "04", "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateFieldParser.java", "line": 53, "end_line": 60, "label": "field parsing" }] },
+    { "id": "responded", "type": "success", "label": "Response", "sublabel": "200 JSON", "tag": "success", "step": "05", "sources": [{ "path": "src/main/java/com/example/certificates/api/CertificateController.java", "line": 24, "end_line": 26, "label": "builds response" }] },
+
+    { "id": "rejected_request", "type": "failure", "label": "Rejected", "sublabel": "INVALID_REQUEST", "tag": "400", "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateExtractionService.java", "line": 24, "end_line": 48, "label": "input validation" }, { "path": "src/main/java/com/example/certificates/exception/GlobalExceptionHandler.java", "line": 20, "end_line": 32, "label": "validation handlers" }] },
+    { "id": "unsupported_type", "type": "failure", "label": "Type", "sublabel": "UNSUPPORTED_FILE_TYPE", "tag": "400", "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateExtractionService.java", "line": 27, "end_line": 31, "label": "fileType allow-list" }] },
+    { "id": "file_too_large", "type": "failure", "label": "Large", "sublabel": "FILE_TOO_LARGE", "tag": "413", "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateExtractionService.java", "line": 49, "end_line": 49, "label": "10 MB limit" }] },
+    { "id": "file_type_mismatch", "type": "failure", "label": "Signature", "sublabel": "FILE_TYPE_MISMATCH", "tag": "400", "sources": [{ "path": "src/main/java/com/example/certificates/service/CertificateExtractionService.java", "line": 52, "end_line": 62, "label": "magic byte check" }] },
+    { "id": "unreadable", "type": "failure", "label": "Unreadable", "sublabel": "CERTIFICATE_UNREADABLE", "tag": "422", "sources": [{ "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 56, "end_line": 58, "label": "no readable text" }, { "path": "src/main/java/com/example/certificates/service/DocumentTextExtractor.java", "line": 72, "end_line": 78, "label": "ocr failure" }] }
+  ],
+  "transitions": [
+    { "id": "received-decoded", "from": "received", "to": "decoded", "label": "checks ok" },
+    { "id": "decoded-text", "from": "decoded", "to": "text_extracted", "label": "verified" },
+    { "id": "text-parsed", "from": "text_extracted", "to": "parsed", "label": "text ok" },
+    { "id": "parsed-responded", "from": "parsed", "to": "responded", "label": "reply" },
+
+    { "id": "received-rejected", "from": "received", "to": "rejected_request", "label": "blank, not base64, empty", "variant": "security" },
+    { "id": "received-unsupported", "from": "received", "to": "unsupported_type", "label": "type not allowed", "variant": "security" },
+    { "id": "decoded-too-large", "from": "decoded", "to": "file_too_large", "label": "over 10 MB", "variant": "security" },
+    { "id": "decoded-mismatch", "from": "decoded", "to": "file_type_mismatch", "label": "sig ≠ fileType", "variant": "security" },
+    { "id": "text-unreadable", "from": "text_extracted", "to": "unreadable", "label": "no text or ocr failed", "variant": "security" },
+    { "id": "unreadable-retry", "from": "unreadable", "to": "text_extracted", "label": "fix runtime, retry", "variant": "dashed" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Happy Path — Every Condition",
+      "items": [
+        "Received → Decoded: certificate and fileType are present, fileType is one of pdf, png, jpg, jpeg, and the payload decodes as Base64",
+        "Decoded → Text Read: decoded size is at most 10 MB, and the magic bytes match the declared fileType",
+        "Text Read → Parsed: non-blank text was obtained from the document",
+        "Parsed → Response: six fields extracted, dates normalised to ISO, expiry compared with today's UTC date"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Rejected — Every Code",
+      "items": [
+        "Blank certificate or fileType, or a body that is not valid JSON — 400 INVALID_REQUEST / INVALID_JSON",
+        "Payload is not Base64, or decodes to zero bytes — 400 INVALID_BASE64 / EMPTY_FILE",
+        "fileType outside pdf, png, jpg, jpeg — 400 UNSUPPORTED_FILE_TYPE",
+        "Decoded size exceeds 10 MB — 413 FILE_TOO_LARGE",
+        "Magic bytes do not match the declared fileType — 400 FILE_TYPE_MISMATCH",
+        "No readable text in the document — 422 CERTIFICATE_UNREADABLE",
+        "The Tesseract runtime is missing or the scan fails — 422 OCR_PROCESSING_FAILED"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Terminal and Recoverable",
+      "items": [
+        "Every failure is terminal for that request — the client resubmits a corrected payload as a new request",
+        "The 422 exit is the only one with a way back: the OCR error text asks you to install the runtime and retry",
+        "Ambiguous expiry dates are not a failure — status is reported as unknown"
+      ]
+    }
+  ]
+}
