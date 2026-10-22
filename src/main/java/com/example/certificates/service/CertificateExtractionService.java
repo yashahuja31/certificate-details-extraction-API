@@ -3,6 +3,7 @@ package com.example.certificates.service;
 import com.example.certificates.exception.ApiException;
 import com.example.certificates.model.CertificateDetails;
 import com.example.certificates.model.ExtractRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,19 @@ public class CertificateExtractionService {
     private static final int MAX_FILE_BYTES = 10 * 1024 * 1024;
     private final DocumentTextExtractor textExtractor;
     private final CertificateFieldParser parser;
+    private final X509CertificateExtractor x509Extractor;
 
-    public CertificateExtractionService(DocumentTextExtractor textExtractor, CertificateFieldParser parser) {
+    @Autowired
+    public CertificateExtractionService(DocumentTextExtractor textExtractor, CertificateFieldParser parser,
+                                        X509CertificateExtractor x509Extractor) {
         this.textExtractor = textExtractor;
         this.parser = parser;
+        this.x509Extractor = x509Extractor;
+    }
+
+    // Preserves the two-argument constructor used by focused service unit tests.
+    public CertificateExtractionService(DocumentTextExtractor textExtractor, CertificateFieldParser parser) {
+        this(textExtractor, parser, new X509CertificateExtractor());
     }
 
     public CertificateDetails extract(ExtractRequest request) {
@@ -26,8 +36,10 @@ public class CertificateExtractionService {
         }
         String type = request.fileType() == null ? "" : request.fileType().trim().toLowerCase(Locale.ROOT);
         if (type.startsWith(".")) type = type.substring(1);
-        if (!type.equals("pdf") && !type.equals("png") && !type.equals("jpg") && !type.equals("jpeg")) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "UNSUPPORTED_FILE_TYPE", "fileType must be pdf, png, jpg, or jpeg");
+        if (!type.equals("pdf") && !type.equals("png") && !type.equals("jpg") && !type.equals("jpeg")
+                && !type.equals("pem") && !type.equals("crt") && !type.equals("cer") && !type.equals("der")) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "UNSUPPORTED_FILE_TYPE",
+                    "fileType must be pdf, png, jpg, jpeg, pem, crt, cer, or der");
         }
 
         String encoded = request.certificate().trim();
@@ -47,6 +59,11 @@ public class CertificateExtractionService {
         }
         if (bytes.length == 0) throw new ApiException(HttpStatus.BAD_REQUEST, "EMPTY_FILE", "Decoded certificate file is empty");
         if (bytes.length > MAX_FILE_BYTES) throw new ApiException(HttpStatus.PAYLOAD_TOO_LARGE, "FILE_TOO_LARGE", "Certificate files must be 10 MB or smaller");
+
+        // X.509 certificates contain structured ASN.1 fields, so parse them directly instead of OCR.
+        if (type.equals("pem") || type.equals("crt") || type.equals("cer") || type.equals("der")) {
+            return x509Extractor.extract(bytes, type);
+        }
 
         String text;
         if (type.equals("pdf")) {

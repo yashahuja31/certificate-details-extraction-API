@@ -17,7 +17,7 @@ import java.util.Set;
  * It intentionally does not parse certificate fields itself: extraction stays in the backend.
  */
 public final class CertificateCli {
-    private static final Set<String> SUPPORTED_TYPES = Set.of("pdf", "png", "jpg", "jpeg");
+    private static final Set<String> SUPPORTED_TYPES = Set.of("pdf", "png", "jpg", "jpeg", "pem", "crt", "cer", "der");
 
     private CertificateCli() {}
 
@@ -69,7 +69,7 @@ public final class CertificateCli {
         }
         fileType = fileType.trim().toLowerCase(Locale.ROOT).replaceFirst("^\\.", "");
         if (!SUPPORTED_TYPES.contains(fileType)) {
-            System.err.println("Unsupported file type. Use pdf, png, jpg, or jpeg (or pass --type).");
+            System.err.println("Unsupported file type. Use pdf, png, jpg, jpeg, pem, crt, cer, or der (or pass --type).");
             return 2;
         }
 
@@ -129,7 +129,7 @@ public final class CertificateCli {
     }
 
     private static void printUsage() {
-        System.out.println("Usage: java -jar target/certificate-details-extraction-api.jar --extract <path> [--type pdf|png|jpg|jpeg] [--url http://localhost:8080]");
+        System.out.println("Usage: java -jar target/certificate-details-extraction-api.jar --extract <path> [--type pdf|png|jpg|jpeg|pem|crt|cer|der] [--url http://localhost:8080]");
         System.out.println("Example: java -jar target/certificate-details-extraction-api.jar --extract \"C:\\Certificates\\my certificate.pdf\"");
         System.out.println("If --type is omitted, the file extension is used. CERTIFICATE_API_URL can override the default API URL.");
     }
