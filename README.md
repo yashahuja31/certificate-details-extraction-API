@@ -95,6 +95,26 @@ $env:CERTIFICATE_API_URL = "~`http://localhost:8080`~"
 
 The CLI is only a client; it does not run extraction locally. The API server must be running first.
 
+## Stringify the .pem file to Base64 string value 
+
+```powershell
+
+$path = (Resolve-Path ".\samples\CERTIFICATE-NAME.pem").Path //certificate name here depends on .pem file
+
+$base64 = [Convert]::ToBase64String(
+    [System.IO.File]::ReadAllBytes($path)
+)
+
+$body = @{
+    certificate = $base64
+    fileType = "pem"
+} | ConvertTo-Json -Compress
+
+Set-Clipboard -Value $body
+
+Write-Host "Request Copied to Clipboard."
+```
+
 ## Try the included sample certificates
 
 ```powershell
