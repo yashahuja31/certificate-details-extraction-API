@@ -227,6 +227,66 @@ Start the application and open:
 
 Use the interactive interface to inspect the endpoint schema and submit requests.
 
+### Testing PEM Certificates with Postman
+
+You can test SSL/TLS certificate extraction by submitting a PEM certificate to the API using Postman.
+
+#### 1. Convert the PEM file to a Base64 JSON request
+
+Open PowerShell in the project root and run:
+
+```powershell
+$path = (Resolve-Path ".\samples\zoho.pem").Path
+$base64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes($path))
+$body = @{ certificate = $base64; fileType = "pem" } | ConvertTo-Json -Compress
+Set-Clipboard -Value $body
+```
+
+Replace `samples\zoho.pem` with the path to your PEM certificate file if necessary.
+
+This command reads the PEM file, encodes its contents as Base64, creates the JSON request body, and copies the complete JSON to your clipboard.
+
+#### 2. Configure Postman
+
+Create a new request with the following settings:
+
+| Setting | Value |
+|---|---|
+| Method | `POST` |
+| URL | `http://localhost:8080/api/certificates/extract` |
+| Body type | `raw` |
+| Format | `JSON` |
+| Content-Type | `application/json` |
+
+In Postman, select **Body → raw → JSON**, paste the copied request body, and click **Send**.
+
+The request body will have this structure:
+
+```json
+{
+  "certificate": "<BASE64_ENCODED_PEM_FILE>",
+  "fileType": "pem"
+}
+```
+
+The placeholder represents the actual Base64-encoded file contents. The command copies the complete request, so you do not need to encode the file or construct the JSON manually.
+
+#### 3. Inspect the response
+
+For a successfully parsed SSL/TLS certificate, the API can return:
+
+- Certificate serial number and subject
+- Issuer information
+- Certificate validity period
+- Expiry date and status (`valid`, `expired`, or `unknown`)
+- Subject alternative names
+- Signature algorithm
+
+The exact fields depend on the supplied certificate and the metadata available in it.
+
+**Note:** Start the API before sending the request. Use a PEM file containing a certificate, not a private key. Do not submit private keys or confidential certificate material to the API or commit them to the repository.
+
+
 ### Using PowerShell
 
 To encode a local certificate file and prepare a JSON request:
