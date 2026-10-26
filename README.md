@@ -1,150 +1,156 @@
-# Certificate Details Extraction API — Java + Spring Boot
+# Certificate Details Extraction API — Java Spring Boot
 
-A backend REST API that accepts a certificate as a Base64-encoded PDF, PNG, JPG, or JPEG and returns extracted fields as JSON. The implementation uses traditional PDF parsing, local Tesseract OCR, regex/label-based extraction, and calendar-date comparison. **No AI model or AI-based extraction service is used.**
+A REST API built with Java and Spring Boot to extract structured information from digital certificates. It supports text-based PDF certificates, scanned documents, certificate images, and SSL/TLS X.509 certificates.
 
-This Java project is the Spring Boot counterpart of the Node.js version and includes a Java command-line client so you can submit an individual certificate from any local file path.
+The API accepts certificate files encoded as Base64 in JSON and returns extracted metadata, certificate validity status, and structured error responses.
 
 ## Features
 
-- `POST /api/certificates/extract` with the same request and response contract as the Node.js version.
-- Supports PDF, PNG, JPG, and JPEG, passed as Base64 in JSON.
-- Apache PDFBox extracts embedded PDF text; scanned PDFs are rendered and passed to Tesseract OCR.
-- Tess4J/Tesseract performs OCR on image certificates.
-- Rule-based field parsing for certificate number, holder name, certificate name, issuer, issue date, and expiry date.
-- Status values: `valid`, `expired`, or `unknown`. Missing or ambiguous expiry dates are not guessed.
-- File signature checks, a 10 MB decoded-file limit, structured error responses, and no full certificate/Base64 logging.
-- Java CLI to submit an individual local file to the API.
-- OpenAPI documentation, synthetic sample certificates, unit tests, and controller tests.
+- **REST API:** `POST /api/certificates/extract`, designed to follow the same request and response contract as the Node.js version.
+- **Multiple file formats:** Supports PDF, PNG, JPG, JPEG, and X.509 certificate formats such as PEM, CRT, CER, and DER.
+- **PDF extraction:** Apache PDFBox extracts embedded text from PDFs.
+- **Scanned PDF processing:** PDFs without usable embedded text are rendered and processed using Tesseract OCR.
+- **Image OCR:** Tess4J integrates Tesseract to extract text from image-based certificates.
+- **X.509 parsing:** Extracts SSL/TLS certificate metadata, including serial number, subject, issuer, validity period, signature algorithm, and subject alternative names.
+- **Rule-based field parsing:** Extracts certificate number, holder name, certificate name, issuer, issue date, and expiry date when available.
+- **Validity status:** Returns `valid`, `expired`, or `unknown`. Missing or ambiguous expiry dates are not guessed.
+- **Input validation:** Includes file signature checks, Base64 validation, supported file type checks, and a 10 MB decoded-file size limit.
+- **Structured errors:** Handles invalid requests and unreadable certificates with structured error responses.
+- **Safe logging:** Records application events and processing diagnostics without logging full certificate contents or Base64 payloads.
+- **Java CLI:** Supports submitting individual local certificate files to a running API.
+- **API documentation:** Provides OpenAPI documentation and an interactive Swagger UI.
+- **Testing and samples:** Includes automated tests and synthetic sample certificates.
 
-## Requirements
+## Tech Stack
 
-- JDK 21 (recommended; Java 17+ should work with this codebase)
-- Apache Maven 3.9+
-- Internet access on the first build so Maven can download project dependencies
-- On Windows, if Tess4J reports native-library startup errors, install the current Microsoft Visual C++ Redistributable. OCR is local and may have native-runtime requirements depending on OS.
+| Component | Technology |
+|---|---|
+| Language | Java |
+| Framework | Spring Boot |
+| Build tool | Apache Maven |
+| PDF text extraction | Apache PDFBox |
+| OCR integration | Tess4J |
+| OCR engine | Tesseract OCR |
+| SSL/TLS parsing | Java X.509 certificate APIs |
+| API documentation | Springdoc OpenAPI / Swagger UI |
+| Testing | JUnit and Spring Boot testing tools |
+| Logging | SLF4J and Logback |
 
-Verify your tools in PowerShell:
+## Prerequisites
 
-```powershell
+Install the following before running the project:
+
+- Java 21
+- Apache Maven
+- Tesseract OCR with English language data, required for OCR-based extraction
+
+Verify Java and Maven installations:
+
+```bash
 java -version
-mvn -v
+mvn -version
 ```
 
-If `mvn` is not recognized, install Apache Maven and add its `bin` directory to PATH before proceeding. The official Maven install guide is at https://maven.apache.org/install.html.
+Verify that Tesseract is available:
 
-## Build and test
-
-From the project root:
-
-```powershell
-mvn clean package
+```bash
+tesseract --version
+tesseract --list-langs
 ```
 
-This compiles the application and runs the tests. The executable JAR is created at:
+The language list should include `eng`.
+
+### Configure Tesseract OCR
+
+Tesseract must be installed and its `tessdata` directory configured correctly for Tess4J.
+
+For example, on Windows, the directory may be:
 
 ```text
-target/certificate-details-extraction-api.jar
+C:\Program Files\Tesseract-OCR\tessdata
 ```
 
-## Start the API
+The directory must contain `eng.traineddata`.
 
-Terminal 1:
+If Tesseract is installed elsewhere, update the OCR data path in the application configuration or source code as appropriate for your setup.
 
-```powershell
+PDF text extraction and X.509 parsing do not require OCR when their respective inputs can be processed directly.
+
+## Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd certificate-details-extraction-API
+```
+
+Replace `<YOUR_REPOSITORY_URL>` with the repository's actual Git URL.
+
+### 2. Build and test
+
+```bash
+mvn clean verify
+```
+
+This compiles the application and runs the automated verification and test lifecycle. A successful build should finish with:
+
+```text
+BUILD SUCCESS
+```
+
+### 3. Start the application
+
+Run the application with Maven:
+
+```bash
+mvn spring-boot:run
+```
+
+Alternatively, package the application and run the JAR:
+
+```bash
+mvn clean package
 java -jar target/certificate-details-extraction-api.jar
 ```
 
-Expected startup message includes port `8080`.
+The application uses port `8080` by default unless configured otherwise.
 
-Health checks:
+To run the packaged application on another port:
 
-```powershell
-Invoke-RestMethod http://localhost:8080/health
-Invoke-RestMethod http://localhost:8080/api/certificates/health
+```bash
+java -jar target/certificate-details-extraction-api.jar --server.port=8081
 ```
 
-The root `/health` endpoint retains the `{ "success": true, "status": "ok" }` shape used by the Node.js version.
+## API Reference
 
-## Submit any individual certificate from a file path
+### Extract Certificate Details
 
-Keep the server running in Terminal 1. Open Terminal 2 and go to the project root. Use the new Java CLI mode:
+**Endpoint:** `POST /api/certificates/extract`
 
-```powershell
-java -jar target/certificate-details-extraction-api.jar --extract "C:\Users\comp\Documents\my-certificate.pdf"
-```
+**Content-Type:** `application/json`
 
-Replace the example path with the real certificate path. Spaces in paths are supported when the path is quoted. The CLI reads the file, Base64-encodes it, sends a request to the Spring Boot API, and prints the HTTP status and JSON response. No Node.js or JavaScript script is needed.
-
-Supported extensions: `.pdf`, `.png`, `.jpg`, `.jpeg`. The file extension selects `fileType` by default. If needed, override it explicitly:
-
-```powershell
-java -jar target/certificate-details-extraction-api.jar --extract "C:\Certificates\certificate-file" --type pdf
-```
-
-Change the API URL for a non-default host/port:
-
-```powershell
-java -jar target/certificate-details-extraction-api.jar --extract "C:\Certificates\my certificate.png" --url http://localhost:8080
-```
-
-You can also set a default URL for the CLI with:
-
-```powershell
-$env:CERTIFICATE_API_URL = "~`http://localhost:8080`~"
-```
-
-The CLI is only a client; it does not run extraction locally. The API server must be running first.
-
-## Stringify the .pem file to Base64 string value 
-
-```powershell
-
-$path = (Resolve-Path ".\samples\CERTIFICATE-NAME.pem").Path //certificate name here depends on .pem file
-
-$base64 = [Convert]::ToBase64String(
-    [System.IO.File]::ReadAllBytes($path)
-)
-
-$body = @{
-    certificate = $base64
-    fileType = "pem"
-} | ConvertTo-Json -Compress
-
-Set-Clipboard -Value $body
-
-Write-Host "Request Copied to Clipboard."
-```
-
-## Try the included sample certificates
-
-```powershell
-java -jar target/certificate-details-extraction-api.jar --extract "samples\valid-certificate.pdf"
-java -jar target/certificate-details-extraction-api.jar --extract "samples\expired-certificate.pdf"
-java -jar target/certificate-details-extraction-api.jar --extract "samples\missing-expiry-certificate.pdf"
-java -jar target/certificate-details-extraction-api.jar --extract "samples\sample-certificate.png"
-java -jar target/certificate-details-extraction-api.jar --extract "samples\corrupted.pdf"
-```
-
-All sample certificates contain synthetic, non-sensitive data. The PNG sample exercises OCR and may take longer than the embedded-text PDFs.
-
-## API contract
-
-### Request
-
-`POST http://localhost:8080/api/certificates/extract`
-
-Content-Type: `application/json`
+#### Request body
 
 ```json
 {
-  "certificate": "BASE64_ENCODED_CERTIFICATE_STRING",
+  "certificate": "<BASE64_ENCODED_CERTIFICATE>",
   "fileType": "pdf"
 }
 ```
 
-Supported values for `fileType`: `pdf`, `png`, `jpg`, `jpeg`. A Base64 data URL prefix such as `data:application/pdf;base64,...` is accepted too.
+| Field | Type | Description |
+|---|---|---|
+| `certificate` | String | Base64-encoded contents of the certificate file |
+| `fileType` | String | Input format, such as `pdf`, `png`, `jpg`, `jpeg`, `pem`, `crt`, `cer`, or `der` |
 
-### Success response
+The `certificate` field must contain the Base64 representation of the file's actual bytes. For PEM certificates, encode the PEM file contents, including the `BEGIN CERTIFICATE` and `END CERTIFICATE` lines.
+
+The decoded file must not exceed 10 MB.
+
+#### Example successful response
+
+A typical document-based certificate response may look like this:
 
 ```json
 {
@@ -162,65 +168,207 @@ Supported values for `fileType`: `pdf`, `png`, `jpg`, `jpeg`. A Base64 data URL 
 }
 ```
 
-These values are for illustration and match one synthetic sample. The backend does not return these fixed values for every request; it parses the uploaded content.
+This is an illustrative example using synthetic certificate details. Fields may be `null` when the input does not contain information that can be reliably extracted.
 
-### Error response
+#### SSL/TLS certificate response
+
+For an X.509 certificate, the response can also include `certificateType` and an `x509` object with certificate-specific metadata.
+
+Example:
 
 ```json
 {
-  "success": false,
-  "message": "certificate is not valid Base64",
-  "error": {
-    "code": "INVALID_BASE64"
+  "success": true,
+  "message": "Certificate details extracted successfully",
+  "data": {
+    "certificateNumber": "EEA8BA6FB5D01634C29E217DEB00ED8A",
+    "holderName": null,
+    "certificateName": "*.example.com",
+    "issuer": "CN=Example Certificate Authority",
+    "issueDate": null,
+    "expiryDate": "2027-12-09",
+    "status": "valid",
+    "certificateType": "ssl_tls",
+    "x509": {
+      "serialNumber": "EEA8BA6FB5D01634C29E217DEB00ED8A",
+      "subject": "CN=*.example.com",
+      "subjectAlternativeNames": [
+        "*.example.com",
+        "example.com"
+      ],
+      "validFrom": "2026-05-25T00:00:00Z",
+      "validUntil": "2027-12-09T23:59:59Z",
+      "signatureAlgorithm": "SHA256withRSA"
+    }
   }
 }
 ```
 
-Common status codes: `400` invalid input, Base64, unsupported type, or file/signature mismatch; `413` decoded file over 10 MB; `422` corrupted/unreadable file or OCR failure; `500` unexpected processing failure. Public errors do not expose stack traces, the input Base64, or the full certificate text.
+The SSL/TLS example is illustrative; actual values depend on the supplied X.509 certificate.
 
-## Expiry-status behavior
+### Certificate status rules
 
-- `valid`: an identifiable expiry date is today or in the future.
-- `expired`: an identifiable expiry date is before today's UTC calendar date.
-- `unknown`: expiry is missing, ambiguous, or unreadable.
-- A certificate is marked `valid` without an expiry date only when the extracted text explicitly establishes that it does not expire (for example, “This certificate does not expire”). A missing date by itself does not imply lifetime validity.
-- Numeric dates such as `03/04/2027` are treated as ambiguous when month/day order cannot be determined safely; they are not guessed.
+| Status | Meaning |
+|---|---|
+| `valid` | The certificate has not expired, or the source explicitly establishes that it does not expire. |
+| `expired` | The certificate's expiry date is in the past. |
+| `unknown` | Expiry information is missing, unreadable, or ambiguous. |
 
-## Extraction approach
+The API does not assume that a missing expiry date means a certificate never expires.
 
-1. Validate required request fields and the allow-list for `fileType`.
-2. Decode Base64 and enforce the 10 MB decoded-file limit.
-3. Validate file signatures so a PNG renamed as a PDF is rejected.
-4. PDFBox reads embedded PDF text. If there is little/no embedded text, PDFBox renders up to five pages at 220 DPI and Tess4J OCRs them. PNG/JPG/JPEG images go directly to Tess4J OCR.
-5. Label and regex rules identify the certificate fields. Missing or unreliable fields are `null`.
-6. Dates are normalized to ISO `YYYY-MM-DD`; the expiry date is compared with the current UTC calendar date.
+## Testing with the API
 
-## Project layout
+### Using Swagger UI
 
-```text
-src/main/java/com/example/certificates/
-  CertificateApiApplication.java        Spring Boot entry point + CLI dispatch
-  api/CertificateController.java        POST extraction endpoint
-  api/RootHealthController.java         GET /health
-  client/CertificateCli.java            Submit a local file to running API
-  model/                                Request and response records
-  service/                              Decode, PDF/OCR, parsing and status logic
-  exception/                            Structured API exception handling
-src/test/java/                           JUnit unit and controller tests
-src/test/resources/samples/              Synthetic fixtures for tests
-samples/                                 Synthetic certificates for manual demos
-docs/openapi.yaml                        OpenAPI 3.1 API documentation
-docs/examples/                            JSON request/response examples
-```
+Start the application and open:
 
-## Run tests separately
+- **Swagger UI:** `http://localhost:8080/swagger-ui/index.html`
+- **OpenAPI specification:** `http://localhost:8080/v3/api-docs`
+
+Use the interactive interface to inspect the endpoint schema and submit requests.
+
+### Using PowerShell
+
+To encode a local certificate file and prepare a JSON request:
 
 ```powershell
-mvn test
+$path = (Resolve-Path ".\samples\valid-certificate.pdf").Path
+
+$base64 = [Convert]::ToBase64String(
+    [IO.File]::ReadAllBytes($path)
+)
+
+$body = @{
+    certificate = $base64
+    fileType = "pdf"
+} | ConvertTo-Json -Compress
 ```
 
-The tests cover valid and expired statuses, missing/ambiguous expiry, explicitly non-expiring wording, field parsing including concatenated OCR text, Base64 validation, file signature checks, corrupted/unreadable inputs, request validation, and the HTTP endpoint shape. OCR recognition quality should additionally be demonstrated locally against the included image fixture because native OCR behavior can vary by operating system.
+Submit it to the running API:
 
-## Limitations
+```powershell
+Invoke-RestMethod `
+    -Uri "http://localhost:8080/api/certificates/extract" `
+    -Method Post `
+    -ContentType "application/json" `
+    -Body $body
+```
 
-Regex and OCR are not universal certificate-understanding systems. Unfamiliar layouts, low-quality scans, rotated images, non-English documents, handwriting, or inconsistent labels can cause fields to remain `null` or be extracted incorrectly. The implementation intentionally avoids inventing values. It does not verify a certificate's authenticity with the issuer or validate a digital signature; it extracts information and calculates an expiry status only.
+Change the file path and `fileType` to match the certificate you want to test. Verify the actual sample filenames available in your local `samples` directory.
+
+### Using the Java CLI
+
+The project also provides a CLI for submitting a local certificate file to the running API.
+
+For example, from the project root:
+
+```powershell
+java -jar .\target\certificate-details-extraction-api.jar `
+    --extract ".\samples\valid-certificate.pdf" `
+    --url "http://localhost:8080"
+```
+
+Run the CLI against an available sample file. The API must already be running, and the JAR must have been built.
+
+## Health Check
+
+The health endpoint is:
+
+```http
+GET /api/certificates/health
+```
+
+For a local instance, use:
+
+```text
+http://localhost:8080/api/certificates/health
+```
+
+## Logging
+
+Application logs are written to:
+
+```text
+logs/certificate-api.log
+```
+
+The log file location and logging levels are configured in `src/main/resources/application.properties`.
+
+The application logs processing events, extraction progress, and error diagnostics while avoiding full certificate text and Base64 payloads.
+
+Generated log files and the `logs/` directory should remain excluded from version control.
+
+## Project Structure
+
+The exact package layout may vary, but the main components are organized around these responsibilities:
+
+```text
+certificate-details-extraction-API/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── .../
+│   │   │       ├── CertificateController.java
+│   │   │       ├── CertificateExtractionService.java
+│   │   │       ├── DocumentTextExtractor.java
+│   │   │       ├── CertificateFieldParser.java
+│   │   │       ├── X509CertificateExtractor.java
+│   │   │       └── GlobalExceptionHandler.java
+│   │   └── resources/
+│   │       └── application.properties
+│   └── test/
+├── samples/
+├── logs/
+├── pom.xml
+├── .gitignore
+└── README.md
+```
+
+- **CertificateController:** Exposes the REST endpoints.
+- **CertificateExtractionService:** Coordinates format-specific extraction and certificate processing.
+- **DocumentTextExtractor:** Extracts PDF text and performs OCR when required.
+- **CertificateFieldParser:** Parses certificate fields from extracted text.
+- **X509CertificateExtractor:** Processes X.509 SSL/TLS certificates.
+- **GlobalExceptionHandler:** Converts supported application failures into structured error responses.
+
+The tree is a conceptual guide; retain the actual package names and directories present in the repository.
+
+## Sample Certificates and Tests
+
+The repository includes synthetic sample certificates and automated tests for supported processing paths.
+
+Useful test scenarios include:
+
+- Valid certificates
+- Expired certificates
+- Missing or ambiguous expiry dates
+- Explicitly non-expiring certificates
+- PDF text extraction
+- Image OCR
+- X.509 certificate parsing
+- Invalid Base64 input
+- Unsupported file types
+- Corrupted or unreadable files
+- File size and signature validation
+
+Run the full verification suite with:
+
+```bash
+mvn clean verify
+```
+
+Use synthetic or otherwise authorized certificate files for local testing. Avoid committing real private keys, sensitive credentials, or confidential certificate documents.
+
+## Security and Limitations
+
+- Input files are Base64-encoded in JSON; Base64 is not encryption.
+- The decoded file size is limited to 10 MB.
+- File type and signature validation help reject invalid input but do not make arbitrary files inherently safe.
+- Certificate fields are extracted using text processing and OCR, so formatting, image quality, handwriting, or decorative fonts may affect accuracy.
+- Fields that cannot be reliably extracted may be returned as `null`.
+- The validity status is derived from the available certificate date information; it is not a full trust-chain, revocation, or hostname-verification assessment.
+- Do not expose private keys or sensitive certificate contents in public repositories, logs, or issue reports.
+
+## License
+
+Add the license and ownership information applicable to this repository before publishing it for reuse.
