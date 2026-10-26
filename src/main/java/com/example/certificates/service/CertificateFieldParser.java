@@ -1,6 +1,8 @@
 package com.example.certificates.service;
 
 import com.example.certificates.model.CertificateDetails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.Clock;
@@ -16,6 +18,7 @@ import java.util.regex.Pattern;
 
 @Component
 public class CertificateFieldParser {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CertificateFieldParser.class);
     private static final Pattern CERT_NUMBER = Pattern.compile("(?i)^(?:certificate\\s*(?:number|no\\.?|id)|certificate\\s*#|credential\\s*(?:id|number)|cert(?:ificate)?\\s*(?:no\\.?|#))\\s*[:#\\-]?\\s*(.*)$");
     private static final Pattern HOLDER = Pattern.compile("(?i)^(?:certificate\\s*holder|holder\\s*name|candidate\\s*name|recipient|awarded\\s*to|presented\\s*to|this\\s+is\\s+to\\s+certify\\s+that|certifies\\s+that|name)\\s*[:\\-]?\\s*(.*)$");
     private static final Pattern CERT_NAME = Pattern.compile("(?i)^(?:certificate\\s*name|certificate\\s*title|certificate\\s*type|course\\s*name|course\\s*title|training\\s*program|certification\\s*title|title)\\s*[:\\-]?\\s*(.*)$");
@@ -51,6 +54,11 @@ public class CertificateFieldParser {
     }
 
     public CertificateDetails parse(String text) {
+        LOGGER.debug("Parsing extracted certificate text; characterCount={}", text == null ? 0 : text.length());
+        if (text == null || text.isBlank()) {
+            LOGGER.warn("Certificate field parser received empty text");
+            return new CertificateDetails(null, null, null, null, null, null, "unknown");
+        }
         String number = clean(findLabeledValue(text, CERT_NUMBER));
         String holder = clean(findLabeledValue(text, HOLDER));
         String certificateName = clean(findLabeledValue(text, CERT_NAME));
@@ -67,6 +75,14 @@ public class CertificateFieldParser {
             // Only honor explicit wording; a missing date by itself is not proof of lifetime validity.
             status = "valid";
         }
+        int populatedFields = 0;
+        if (number != null) populatedFields++;
+        if (holder != null) populatedFields++;
+        if (certificateName != null) populatedFields++;
+        if (issuer != null) populatedFields++;
+        if (issueDate != null) populatedFields++;
+        if (expiryDate != null) populatedFields++;
+        LOGGER.debug("Certificate field parsing completed; populatedFields={}, status={}", populatedFields, status);
         return new CertificateDetails(number, holder, certificateName, issuer, issueDate, expiryDate, status);
     }
 

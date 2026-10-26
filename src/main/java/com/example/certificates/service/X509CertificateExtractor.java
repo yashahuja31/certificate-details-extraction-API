@@ -3,6 +3,8 @@ package com.example.certificates.service;
 import com.example.certificates.exception.ApiException;
 import com.example.certificates.model.CertificateDetails;
 import com.example.certificates.model.X509CertificateInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,7 @@ import java.util.regex.Pattern;
 /** Parses PEM/DER X.509 certificates directly; it does not use OCR. */
 @Service
 public class X509CertificateExtractor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(X509CertificateExtractor.class);
     private static final Pattern PEM_CERTIFICATE = Pattern.compile(
             "-----BEGIN CERTIFICATE-----\\s*(.*?)\\s*-----END CERTIFICATE-----",
             Pattern.DOTALL
@@ -47,6 +50,7 @@ public class X509CertificateExtractor {
     }
 
     public CertificateDetails extract(byte[] fileBytes, String fileType) {
+        LOGGER.debug("Starting X.509 parsing; fileType={}, sizeBytes={}", fileType, fileBytes.length);
         try {
             byte[] derBytes = decodePemIfNeeded(fileBytes, fileType);
             CertificateFactory factory = CertificateFactory.getInstance("X.509");
@@ -91,6 +95,7 @@ public class X509CertificateExtractor {
             // A domain certificate has no human holder and no separate issueDate field.
             // certificateName carries the subject CN/domain for the existing response contract;
             // validFrom/validUntil preserve the precise X.509 validity timestamps in x509 metadata.
+            LOGGER.debug("X.509 parsing completed; DNS name count={}, status={}", dnsNames.size(), status);
             return new CertificateDetails(
                     serial,
                     null,
@@ -103,6 +108,7 @@ public class X509CertificateExtractor {
                     x509
             );
         } catch (CertificateException | IllegalArgumentException ex) {
+            LOGGER.warn("X.509 certificate parsing failed; causeType={}", ex.getClass().getSimpleName(), ex);
             throw new ApiException(HttpStatus.UNPROCESSABLE_ENTITY, "INVALID_X509_CERTIFICATE",
                     "The supplied file is not a readable X.509 certificate");
         }
