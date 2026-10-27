@@ -15,7 +15,7 @@ This patch adds non-sensitive SLF4J/Logback logging to the current X.509-enabled
 1. Stop the running Spring Boot server with Ctrl+C.
 2. Back up or commit your current changes first.
 3. Extract this ZIP at the project root (the folder containing `pom.xml`) and allow the listed files to overwrite matching files.
-4. Confirm `pom.xml` still has your springdoc dependency and the project uses Java 21.
+4. Confirm `pom.xml` still has your springdoc dependency and the project uses Java 25.
 5. Run `mvn clean verify`.
 6. Start the server again. If you need OCR on Windows, make sure `TESSDATA_PREFIX` is set to the tessdata directory in the same terminal, or set `-Dapp.ocr.tessdata-path="C:/Program Files/Tesseract-OCR/tessdata"` when starting Java.
 

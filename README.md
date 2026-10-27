@@ -40,7 +40,7 @@ The API accepts certificate files encoded as Base64 in JSON and returns extracte
 
 Install the following before running the project:
 
-- Java 21
+- Java 25 (latest LTS)
 - Apache Maven
 - Tesseract OCR with English language data, required for OCR-based extraction
 
