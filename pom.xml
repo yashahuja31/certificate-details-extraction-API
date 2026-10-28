@@ -14,7 +14,7 @@
     <name>Certificate Details Extraction API</name>
     <description>Rule-based certificate field extraction with PDFBox and Tesseract OCR.</description>
     <properties>
-        <java.version>25</java.version>
+        <java.version>21</java.version>
         <pdfbox.version>3.0.8</pdfbox.version>
         <tess4j.version>5.19.0</tess4j.version>
     </properties>
